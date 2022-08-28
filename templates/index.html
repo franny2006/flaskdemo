@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container features">
+    <h1>Test</h1>
+    <h3>Übersicht der DB-Eintäge</h3>
+    <table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Farbe</th>
+        </tr>
+    </thead>
+    <tbody>
+    {%for auftrag in data %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ color }}</td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+
+    </table>
+</div>
+
+
+
+
+{% endblock %}

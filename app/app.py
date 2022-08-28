@@ -1,5 +1,5 @@
 from typing import List, Dict
-from flask import Flask
+from flask import Flask, request, jsonify, render_template, redirect
 import mysql.connector
 import json
 
@@ -41,7 +41,8 @@ def index() -> str:
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM test_table')
     results = [{name: color} for (name, color) in cursor]
-    return json.dumps({'test_table': results})
+  #  return json.dumps({'test_table': results})
+    return render_template('index.html', title='Index', data=results)
 
 
 if __name__ == '__main__':
