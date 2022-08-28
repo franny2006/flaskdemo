@@ -8,6 +8,10 @@ node {
     }
 
     stage('Build image') {
+        sh 'docker-compose build'
+    }
+
+    stage('Start Containers') {
         sh 'docker-compose up -d'
     }
 
