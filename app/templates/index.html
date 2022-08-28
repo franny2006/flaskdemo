@@ -13,10 +13,10 @@
         </tr>
     </thead>
     <tbody>
-    {%for auftrag in data %}
+    {% for eintrag in data %}
         <tr>
-            <td>{{ name }}</td>
-            <td>{{ color }}</td>
+            <td>{{ eintrag['name'] }}</td>
+            <td>{{ eintrag['color'] }}</td>
         </tr>
     {% endfor %}
 

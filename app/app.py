@@ -6,6 +6,7 @@ import json
 from cls_db import cls_dbAktionen
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 
 
 
@@ -40,9 +41,17 @@ def index() -> str:
     connection = db.conn()
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM test_table')
-    results = [{name: color} for (name, color) in cursor]
+   # data = [{name: color} for (name, color) in cursor]
+    row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+    rv = cursor.fetchall()
+    json_data = []
+    for result in rv:
+        json_data.append(dict(zip(row_headers, result)))
+    data = json.dumps(json_data)
+    data = json.loads(data)
+    print(data)
   #  return json.dumps({'test_table': results})
-    return render_template('index.html', title='Index', data=results)
+    return render_template('index.html', title='Index', data=data)
 
 
 if __name__ == '__main__':

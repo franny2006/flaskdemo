@@ -15,6 +15,13 @@ class cls_dbAktionen():
         #     'port': '3306',
         #     'database': 'devopsroles'
         # }
+        # config = {
+        #     'user': 'root',
+        #     'password': 'root',
+        #     'host': 'db',
+        #     'port': '3306',
+        #     'database': 'devopsroles'
+        # }
         config = {
             'user': 'root',
             'password': 'root',
