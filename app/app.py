@@ -1,7 +1,7 @@
 from typing import List, Dict
 from flask import Flask
 import mysql.connector
-import json
+import json2
 
 app = Flask(__name__)
 
