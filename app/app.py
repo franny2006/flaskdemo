@@ -37,9 +37,10 @@ def home():
 def index() -> str:
     statement = "SELECT * FROM test_table"
     db = cls_dbAktionen()
-    results = db.execSelect(statement)
-    print(results)
-    results = [{name: color} for (name, color) in results]
+    connection = db.conn()
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM test_table')
+    results = [{name: color} for (name, color) in cursor]
     return json.dumps({'test_table': results})
 
 
