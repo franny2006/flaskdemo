@@ -28,8 +28,12 @@ def test_table() -> List[Dict]:
 
     return results
 
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Test Flask / MySQL / Docker</h1>" \
+           "<h3>Demoanwendung</h3>"
 
-@app.route('/')
+@app.route('/demo')
 def index() -> str:
     statement = "SELECT * FROM test_table"
     db = cls_dbAktionen()
