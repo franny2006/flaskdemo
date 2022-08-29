@@ -11,6 +11,8 @@ node {
         sh 'docker-compose build'
         echo "PATH=$PATH"
         sh 'cd app/features'
+        echo "PATH=$PATH"
+        echo "Workdir=$WORKDIR"
         sh 'behave'
     }
 
