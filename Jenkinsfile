@@ -10,7 +10,7 @@ node {
     stage('Build image') {
         sh 'docker-compose build'
         echo "PATH=$PATH"
-        sh 'cd app/features'
+        sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app/features'
         echo "PATH=$PATH"
         echo "Workdir=$WORKSPACE"
         sh 'behave'
