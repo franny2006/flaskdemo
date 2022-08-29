@@ -10,6 +10,7 @@ node {
     stage('Build image') {
         sh 'docker-compose build'
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
+        $WORKSPACE = '/var/lib/jenkins/workspace/Flaskdemo/app'
         echo "Workdir=$WORKSPACE"
         sh 'behave'
     }
