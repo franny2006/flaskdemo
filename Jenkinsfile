@@ -9,6 +9,9 @@ node {
 
     stage('Build image') {
         sh 'docker-compose build'
+        echo "PATH=$PATH"
+        sh 'cd app/features'
+        sh 'behave'
     }
 
     stage('Start Containers') {

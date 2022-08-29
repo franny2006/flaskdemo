@@ -7,4 +7,5 @@ mysqlclient==2.1.1
 pip==21.3.1
 setuptools==59.6.0
 Werkzeug==2.0.3
+behave==1.2.6
 
