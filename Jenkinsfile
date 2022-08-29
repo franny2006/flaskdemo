@@ -12,7 +12,7 @@ node {
         echo "PATH=$PATH"
         sh 'cd app/features'
         echo "PATH=$PATH"
-        echo "Workdir=$WORKDIR"
+        echo "Workdir=$WORKSPACE"
         sh 'behave'
     }
 
