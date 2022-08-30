@@ -26,4 +26,10 @@ node {
         sh 'docker-compose up -d'
     }
 
+    post {
+      always {
+        junit '**/reports/junit/*.xml'
+      }
+   }
+
 }
