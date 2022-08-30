@@ -30,4 +30,8 @@ node {
         junit '**/testreports/*.xml'
    }
 
+   stage('Import results to Xray') {
+        step([$class: 'XrayImportBuilder', endpointName: '/junit', fixVersion: 'v3.0', importFilePath: '**/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '552d0cb6-6f8d-48ba-bbad-50e94f39b722'])
+   }
+
 }
