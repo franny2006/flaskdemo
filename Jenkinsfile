@@ -12,7 +12,7 @@ node {
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
-            sh 'behave'
+            sh 'behave  --junit --junit-directory /testreports'
         }
 
     }

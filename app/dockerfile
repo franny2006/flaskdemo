@@ -17,4 +17,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY app.py /app
 COPY cls_db.py /app
 COPY /templates templates/
+COPY /testreports testreports/
 CMD python app.py
