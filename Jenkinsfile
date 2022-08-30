@@ -12,6 +12,7 @@ node {
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
+            sh 'sudo chmod -R a+rw /testreports'
             sh 'behave  --junit --junit-directory /testreports'
         }
 
