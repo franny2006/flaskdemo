@@ -8,12 +8,12 @@ services:
       - "5000:5000"
   app-persistierung:
     build: ./app_persistierung
-    depends_on:
-      - app-gui
     ports:
       - "5005:5005"
   db:
     image: mysql
+    depends_on:
+      - app-persistierung
     ports:
       - "3306:3306"
     environment:
