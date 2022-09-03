@@ -8,7 +8,12 @@ node {
     }
 
     stage('Build image') {
-        sh 'docker stop $(docker ps -q)'
+        try {
+            sh 'docker stop $(docker ps -q)'
+            }
+        catch (Exception e) {
+            echo 'Container stoppen nicht möglich: ' + e.toString()
+            }
         sh 'docker-compose build'
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
