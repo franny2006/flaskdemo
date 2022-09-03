@@ -9,7 +9,7 @@ services:
   app-persistierung:
     build: ./app_persistierung
     depends_on:
-      - db
+      - app-gui
     ports:
       - "5005:5000"
   db:
