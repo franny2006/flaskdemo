@@ -8,6 +8,7 @@ node {
     }
 
     stage('Build image') {
+        sh 'docker stop $(docker ps -q)'
         sh 'docker-compose build'
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
