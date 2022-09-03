@@ -19,7 +19,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY da-persistierung-app.py /app_persistierung
 COPY /classes classes/
 COPY /db db/
-ADD db/init.sql /docker-entrypoint-initdb.d
 
 CMD python da-persistierung-app.py
 
