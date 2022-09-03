@@ -14,7 +14,7 @@ node {
         catch (Exception e) {
             echo 'Container stoppen nicht möglich:  ' + e.toString()
             }
-        sh 'docker-compose build'
+        sh 'docker-compose build --force-recreate'
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
