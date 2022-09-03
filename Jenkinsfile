@@ -12,7 +12,7 @@ node {
             sh 'docker stop $(docker ps -q)'
             }
         catch (Exception e) {
-            echo 'Container stoppen nicht möglich: ' + e.toString()
+            echo 'Container stoppen nicht möglich:  ' + e.toString()
             }
         sh 'docker-compose build --force-recreate'
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
