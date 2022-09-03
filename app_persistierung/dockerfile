@@ -16,4 +16,4 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Run app.py when the container launches
 COPY da-persistierung-app.py /app_persistierung
 COPY /classes classes/
-CMD python da_persistierung-app.py
+CMD python da-persistierung-app.py
