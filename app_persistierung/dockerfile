@@ -13,7 +13,13 @@ COPY requirements.txt /app_persistierung
 RUN python -m pip install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
+
+
 # Run app.py when the container launches
 COPY da-persistierung-app.py /app_persistierung
 COPY /classes classes/
+COPY /db db/
+ADD db/init.sql /docker-entrypoint-initdb.d
+
 CMD python da-persistierung-app.py
+
