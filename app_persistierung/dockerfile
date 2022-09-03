@@ -2,7 +2,7 @@
 FROM python:3.6
 
 # The EXPOSE instruction indicates the ports on which a container
-EXPOSE 5000
+EXPOSE 5005
 
 # Sets the working directory for following COPY and CMD instructions
 # Notice we haven’t created a directory by this name - this instruction
@@ -14,8 +14,6 @@ RUN python -m pip install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Run app.py when the container launches
-COPY da-gui-app.py /app
-COPY cls_db.py /app
+COPY da_persistierung-app.py /app
 COPY /classes classes/
-COPY /templates templates/
-CMD python da-gui-app.py
+CMD python da_persistierung-app.py

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Kundenanlage</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.kundeRolle.label }}<br>
+            {{ form.kundeRolle(size=1) }}<br>
+            {% for error in form.kundeRolle.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundeAnrede.label }}<br>
+            {{ form.kundeAnrede(size=1) }}<br>
+            {% for error in form.kundeAnrede.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundeName.label }}<br>
+            {{ form.kundeName(size=32) }}<br>
+            {% for error in form.kundeName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundeVorname.label }}<br>
+            {{ form.kundeVorname(size=32) }}<br>
+            {% for error in form.kundeVorname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundeStrasse.label }}<br>
+            {{ form.kundeStrasse(size=32) }}<br>
+            {% for error in form.kundeStrasse.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundePlz.label }}<br>
+            {{ form.kundePlz(size=6) }}<br>
+            {% for error in form.kundePlz.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.kundeOrt.label }}<br>
+            {{ form.kundeOrt(size=32) }}<br>
+            {% for error in form.kundeOrt.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+
+
+{% endblock %}

@@ -1,6 +1,6 @@
-Feature: Demo
+Feature: Glattläufer-Feature
 
-  Scenario: Demo Scenario
+  Scenario: Glattläufer Scenario
     Given we have behave installed
     When we implement a test
     Then behave will test it for us

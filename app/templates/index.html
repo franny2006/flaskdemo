@@ -4,19 +4,31 @@
 
 <div class="container features">
     <h1>Test</h1>
-    <h3>Übersicht der DB-Eintäge</h3>
+    <h3>Kundenübersicht</h3>
     <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
+            <th>ID</th>
+            <th>Anrede</th>
+            <th>Vorname</th>
             <th>Name</th>
-            <th>Farbe</th>
+            <th>Straße</th>
+            <th>PLZ</th>
+            <th>Ort</th>
+            <th>zuletzt geändert</th>
         </tr>
     </thead>
     <tbody>
     {% for eintrag in data %}
         <tr>
-            <td>{{ eintrag['name'] }}</td>
-            <td>{{ eintrag['color'] }}</td>
+            <td>{{ eintrag['kunde_id'] }}</td>
+            <td>{{ eintrag['anrede'] }}</td>
+            <td>{{ eintrag['vorname'] }}</td>
+            <td>{{ eintrag['nachname'] }}</td>
+            <td>{{ eintrag['strasse'] }}</td>
+            <td>{{ eintrag['plz'] }}</td>
+            <td>{{ eintrag['ort'] }}</td>
+            <td>{{ eintrag['timestamp'] }}</td>
         </tr>
     {% endfor %}
 

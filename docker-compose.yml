@@ -1,11 +1,17 @@
 version: "3.1"
 services:
-  app:
+  app-gui:
     build: ./app
     depends_on:
       - db
     ports:
       - "5000:5000"
+  app-persistierung:
+    build: ./app_persistierung
+    depends_on:
+      - db
+    ports:
+      - "5005:5000"
   db:
     image: mysql
     ports:

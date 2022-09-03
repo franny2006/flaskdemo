@@ -23,27 +23,14 @@ class cls_dbAktionen():
         #     'database': 'devopsroles'
         # }
         config = {
-            'user': 'test',
-            'password': 'test',
-            'host': 'localhost',
+            'user': 'root',
+            'password': 'root',
+            'host': 'db',
             'port': '3306',
             'database': 'devopsroles'
         }
         connection = mysql.connector.connect(**config)
         return connection
-
-    def addKunde(self, dictKunde):
-        sql = "INSERT INTO kunden (rolle_id, anrede, name, vorname, strasse, plz, ort) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
-               dictKunde['plz'], dictKunde['ort'])
-        connection = self.conn()
-        cursor = connection.cursor()
-        cursor.execute(sql, val)
-        kunde_id = cursor.lastrowid
-        connection.commit()
-        cursor.close()
-        connection.close()
-        return kunde_id
 
 
 
