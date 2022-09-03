@@ -16,6 +16,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Run app.py when the container launches
 COPY da-gui-app.py /app
 COPY cls_db.py /app
+COPY forms.py /app
 COPY /classes classes/
 COPY /templates templates/
 CMD python da-gui-app.py
