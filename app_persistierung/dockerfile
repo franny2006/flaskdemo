@@ -20,6 +20,7 @@ COPY da-persistierung-app.py /app_persistierung
 COPY /classes classes/
 RUN rm -rf dummy
 RUN mkdir dummy
+CMD mkdir dummy
 
 CMD python da-persistierung-app.py
 
