@@ -29,4 +29,4 @@ VALUES
 INSERT INTO kunden
   (rolle_id, anrede, vorname, name, strasse, plz, ort)
 VALUES
-  ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11111', 'Musterstadt');
+  ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11112', 'Musterstadt');
