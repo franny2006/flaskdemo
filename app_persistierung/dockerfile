@@ -7,7 +7,7 @@ EXPOSE 5005
 # Sets the working directory for following COPY and CMD instructions
 # Notice we haven’t created a directory by this name - this instruction
 # creates a directory with this name if it doesn’t exist
-WORKDIR /app
+WORKDIR /app_persistierung
 
 COPY requirements.txt /app
 RUN python -m pip install --upgrade pip
