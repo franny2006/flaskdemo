@@ -32,5 +32,17 @@ class cls_dbAktionen():
         connection = mysql.connector.connect(**config)
         return connection
 
+    def addKunde(self, dictKunde):
+        sql = "INSERT INTO kunden (rolle_id, anrede, name, vorname, strasse, plz, ort) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
+               dictKunde['plz'], dictKunde['ort'])
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql, val)
+        kunde_id = cursor.lastrowid
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return kunde_id
 
 
