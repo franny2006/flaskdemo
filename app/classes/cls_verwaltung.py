@@ -1,4 +1,4 @@
-from cls_db import cls_dbAktionen
+from ..classes.cls_db import cls_dbAktionen
 import json
 
 
