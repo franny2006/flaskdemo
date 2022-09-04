@@ -4,7 +4,7 @@ import mysql.connector
 import json
 import requests
 
-from cls_db import cls_dbAktionen
+from classes.cls_db import cls_dbAktionen
 from classes.cls_verwaltung import cls_verwaltung
 from forms import KundeForm
 
