@@ -7,8 +7,6 @@ services:
     ports:
       - "5000:5000"
     container_name: da_gui
-    networks:
-      - demoNetz
   app-persistierung:
     build: ./app_persistierung
     container_name: da_persistierung
@@ -37,6 +35,3 @@ services:
       - "5001:80"
     depends_on:
       - db
-networks:
-  demoNetz:
-    driver: bridge
