@@ -87,10 +87,12 @@ def addKunde():
         headers = {'Content-type': 'application/json'}
      #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
         if config.get('Service Mock', 'mock') != "True":
-            url = "http://"+config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+            url_rules = "http://"+config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
         else:
-            url = "http://" + config.get('Service Mock', 'host') + ":" + config.get('Service Mock', 'port')
-        r = requests.post(url + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
+            url_rules = "http://" + config.get('Service Mock', 'host') + ":" + config.get('Service Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+
+        r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(
             form.kundeVorname.data, form.kundeName.data))
         dict_status = r.json()
@@ -99,7 +101,7 @@ def addKunde():
         if 'nok' in dict_status['status']:
             flash('Fehler bei {} {}: {}'.format(form.kundeVorname.data, form.kundeName.data, dict_status['status']))
         else:
-            r = requests.post('http://localhost:5005/api/v1.0/addKunde', json=payload, headers=headers)
+            r = requests.post(url_persist + '/api/v1.0/addKunde', json=payload, headers=headers)
             return redirect('/viewKunden')
     return render_template('addKunde.html', title='Kunde anlegen', form=form)
 
