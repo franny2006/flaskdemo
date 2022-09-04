@@ -15,7 +15,7 @@ node {
             echo 'Container stoppen nicht möglich:  ' + e.toString()
             }
         sh 'docker-compose build'
-        sh 'docker exec -i flaskdemo_db_1 sh -c 'exec mysql -uroot -proot' < /db/init.sql'
+
         sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
@@ -31,6 +31,7 @@ node {
 
     stage('Start Containers') {
         sh 'docker-compose up -d'
+        sh 'docker exec -i flaskdemo_db_1 sh -c 'exec mysql -uroot -proot' < /db/init.sql'
     }
 
     stage('Reporting') {
