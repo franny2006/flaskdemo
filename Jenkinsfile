@@ -35,6 +35,7 @@ node {
     }
 
     stage('Create Network Connectivity') {
+        sh 'docker network prune'
         sh 'docker network connect demoNetz da_gui'
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql'
     }
