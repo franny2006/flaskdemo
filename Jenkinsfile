@@ -31,7 +31,7 @@ node {
 
     stage('Start Containers') {
         sh 'docker-compose up -d'
-        sh 'docker exec -i flaskdemo_db_1 sh -c \'exec mysql -uroot -p"root"\' < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql'
+        sh 'docker exec -i flaskdemo_db_1 /bin/bash -c "mysql -u root -proot < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql"'
     }
 
     stage('Reporting') {
