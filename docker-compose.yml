@@ -33,3 +33,4 @@ services:
       - db
 networks:
   meinNetz:
+    external: true
