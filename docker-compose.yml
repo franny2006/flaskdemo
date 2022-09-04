@@ -32,7 +32,4 @@ services:
     depends_on:
       - db
 networks:
-  default:
-    # Use a custom driver
-    name: meinNetz
-    external: true
+  meinNetz:
