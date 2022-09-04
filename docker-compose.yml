@@ -14,8 +14,6 @@ services:
       - "5005:5005"
   db:
     image: mysql
-    depends_on:
-      - app-persistierung
     ports:
       - "3306:3306"
     environment:
