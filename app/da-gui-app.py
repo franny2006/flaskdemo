@@ -82,7 +82,7 @@ def addKunde():
         }
         headers = {'Content-type': 'application/json'}
      #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
-        r = requests.post('http://38.242.131.123/:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
+        r = requests.post('http://38.242.131.123:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(
             form.kundeVorname.data, form.kundeName.data))
         dict_status = r.json()
