@@ -31,3 +31,7 @@ services:
       - "5001:80"
     depends_on:
       - db
+networks:
+  default:
+    # Use a custom driver
+    driver: custom-driver-1
