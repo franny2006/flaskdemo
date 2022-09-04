@@ -34,4 +34,5 @@ services:
 networks:
   default:
     # Use a custom driver
-    driver: custom-driver-1
+    name: meinNetz
+    external: true
