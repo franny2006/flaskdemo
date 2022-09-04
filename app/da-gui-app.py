@@ -88,9 +88,10 @@ def addKunde():
      #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
         if config.get('Service Mock', 'mock') != "True":
             url_rules = "http://"+config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+            url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
         else:
-            url_rules = "http://" + config.get('Service Mock', 'host') + ":" + config.get('Service Mock', 'port')
-        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+            url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+            url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
 
         r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(
