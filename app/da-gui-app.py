@@ -8,6 +8,10 @@ from classes.cls_db import cls_dbAktionen
 from classes.cls_verwaltung import cls_verwaltung
 from forms import KundeForm
 
+from configparser import ConfigParser
+config = ConfigParser()
+config.read('config/config.ini')
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'you-will-never-guess'
@@ -82,7 +86,11 @@ def addKunde():
         }
         headers = {'Content-type': 'application/json'}
      #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
-        r = requests.post('http://demoanwendung_backend_app-rules_1:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
+        if config.get('Service Mock', 'mock') != "True":
+            url = "http://"+config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        else:
+            url = "http://" + config.get('Service Mock', 'host') + ":" + config.get('Service Mock', 'port')
+        r = requests.post(url + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(
             form.kundeVorname.data, form.kundeName.data))
         dict_status = r.json()

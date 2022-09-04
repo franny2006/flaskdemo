@@ -30,7 +30,7 @@ node {
     }
 
     stage('Start Containers') {
-        sh 'docker-compose up -d'
+        sh 'docker-compose up -d --remove-orphans'
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql'
     }
 
