@@ -23,9 +23,9 @@ class cls_dbAktionen():
         #     'database': 'devopsroles'
         # }
         config = {
-            'user': 'test',
-            'password': 'test',
-            'host': 'localhost',
+            'user': 'root',
+            'password': 'root',
+            'host': 'db',
             'port': '3306',
             'database': 'devopsroles'
         }
