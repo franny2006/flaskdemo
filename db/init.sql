@@ -1,8 +1,7 @@
 create database devopsroles;
 use devopsroles;
 
-CREATE TABLE demo_kunden (
-  id ()
+CREATE TABLE test_table (
   name VARCHAR(20),
   color VARCHAR(10)
 );
