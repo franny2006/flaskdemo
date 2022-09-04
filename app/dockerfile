@@ -18,5 +18,6 @@ COPY da-gui-app.py /app
 #COPY cls_db.py /app
 COPY forms.py /app
 COPY /classes classes/
+COPY /config config/
 COPY /templates templates/
 CMD python da-gui-app.py
