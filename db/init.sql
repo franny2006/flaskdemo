@@ -23,8 +23,7 @@ CREATE TABLE kunden (
 INSERT INTO test_table
   (name, color)
 VALUES
-  ('dev', 'blue'),
-  ('pro', 'yellow');
+  ('dev', 'blue');
 
 INSERT INTO kunden
   (rolle_id, anrede, vorname, name, strasse, plz, ort)
