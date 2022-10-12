@@ -42,11 +42,9 @@ node {
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql'
     }
 
-    stage('Reporting') {
-        junit '**/testreports/*.xml'
-   }
 
    stage('Import results to Xray') {
+        junit '**/testreports/*.xml'
         step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
    }
 

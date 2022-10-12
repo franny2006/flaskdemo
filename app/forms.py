@@ -15,7 +15,7 @@ class PartnerForm(FlaskForm):
 
 
 class KundeForm(FlaskForm):
-    kundeId = HiddenField('KundeId')
+    kunde_id = HiddenField('kunde_id')
     kundeRolle = SelectField('Rolle', choices=[('', 'Bitte auswählen'), ('1', 'Natürliche Person'), ('2', 'Juristische Person'), ('3', 'Sonstiges')], validators=[DataRequired(message="Pflichtfeld")])
     kundeAnrede = SelectField('Anrede', choices=[('', 'Bitte auswählen'), ('1', 'Herr'), ('2', 'Frau'), ('3', 'Divers')], validators=[DataRequired(message="Pflichtfeld")])
     kundeName = StringField('Name', validators=[DataRequired(message="Pflichtfeld")])

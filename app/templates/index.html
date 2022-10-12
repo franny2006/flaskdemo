@@ -16,6 +16,8 @@
             <th>PLZ</th>
             <th>Ort</th>
             <th>zuletzt geändert</th>
+            <th scope="col" style="width: 10%">Bearbeiten</th>
+            <th scope="col" style="width: 10%">Löschen</th>
         </tr>
     </thead>
     <tbody>
@@ -24,11 +26,13 @@
             <td>{{ eintrag['kunde_id'] }}</td>
             <td>{{ eintrag['anrede'] }}</td>
             <td>{{ eintrag['vorname'] }}</td>
-            <td>{{ eintrag['nachname'] }}</td>
+            <td>{{ eintrag['name'] }}</td>
             <td>{{ eintrag['strasse'] }}</td>
             <td>{{ eintrag['plz'] }}</td>
             <td>{{ eintrag['ort'] }}</td>
             <td>{{ eintrag['timestamp'] }}</td>
+            <td><a href="modifyKunde?kunde_id={{ eintrag['kunde_id'] }}">bearbeiten</a></td>
+            <td><a href="deleteKunde?kunde_id={{ eintrag['kunde_id'] }}">löschen</a></td>
         </tr>
     {% endfor %}
 

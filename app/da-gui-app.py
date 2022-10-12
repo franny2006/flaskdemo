@@ -99,7 +99,7 @@ def addKunde():
         dict_status = r.json()
 
         print("Status Aufruf: ", dict_status)
-        if 'nok' in dict_status['status']:
+        if 'nok' in dict_status['status']['result']:
             flash('Fehler bei {} {}: {}'.format(form.kundeVorname.data, form.kundeName.data, dict_status['status']))
         else:
             r = requests.post(url_persist + '/api/v1.0/addKunde', json=payload, headers=headers)
@@ -108,6 +108,63 @@ def addKunde():
 
 
 
+
+@app.route('/modifyKunde', methods=['GET', 'POST'])
+def modifyKunde():
+
+    kunde_id = request.args.get('kunde_id')
+
+    statement = "SELECT * FROM kunden where kunde_id = " + kunde_id
+    db = cls_dbAktionen()
+    connection = db.conn()
+    cursor = connection.cursor()
+    cursor.execute(statement)
+    # data = [{name: color} for (name, color) in cursor]
+    row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+    rv = cursor.fetchall()
+    json_data = []
+    for result in rv:
+        json_data.append(dict(zip(row_headers, result)))
+    data = json.dumps(json_data, default=str)
+    data = json.loads(data)
+    form = KundeForm()
+    form.kundeAnrede.data = data[0]['anrede']
+    form.kunde_id.data = kunde_id
+    #  return json.dumps({'test_table': results})
+    # Verarbeitung, wenn Formular validiert werden kann
+    if form.validate_on_submit():
+        payload = {
+            'kunde_id': form.kunde_id.data,
+            'rolle': form.kundeRolle.data,
+            'anrede': form.kundeAnrede.data,
+            'name': form.kundeName.data,
+            'vorname': form.kundeVorname.data,
+            'strasse': form.kundeStrasse.data,
+            'plz': form.kundePlz.data,
+            'ort': form.kundeOrt.data
+        }
+        headers = {
+            'Content-type': 'application/json'}
+        #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
+        if config.get('Service Mock', 'mock') != "True":
+            url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+            url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+        else:
+            url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+            url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+        r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
+        flash('Daten gespeichert für Kunde {} {}'.format(
+            form.kundeVorname.data, form.kundeName.data))
+        dict_status = r.json()
+
+        print("Status Aufruf: ", dict_status)
+        if 'nok' in dict_status['status']['result']:
+            flash('Fehler bei {} {}: {}'.format(form.kundeVorname.data, form.kundeName.data, dict_status['status']))
+        else:
+            r = requests.post(url_persist + '/api/v1.0/updateKunde', json=payload, headers=headers)
+            return redirect('/viewKunden')
+    return render_template('modifyKunde.html', title='Kunde bearbeiten', form=form, data=data)
 
 
 

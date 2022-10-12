@@ -53,4 +53,36 @@ class cls_dbAktionen():
         connection.close()
         return kunde_id
 
+    def updateKunde(self, dictKunde):
+        sql = "UPDATE kunden " \
+              "SET rolle_id = %s, " \
+              "anrede = %s, " \
+              "name = %s, " \
+              "vorname = %s, " \
+              "strasse = %s, " \
+              "plz = %s, " \
+              "ort = %s " \
+              "where kunde_id = %s"
+        val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
+               dictKunde['plz'], dictKunde['ort'], dictKunde['kunde_id'])
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql, val)
+        kunde_id = cursor.lastrowid
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return kunde_id
+
+    def viewKunde(self, dictKunde):
+        sql = "SELECT * FROM kunden where kunde_id = " + dictKunde['kunde_id']
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        kunde_id = cursor.lastrowid
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return kunde_id
+
 
