@@ -42,21 +42,18 @@ def home():
 
 @app.route('/viewKunden')
 def index() -> str:
-    statement = "SELECT * FROM kunden"
-    db = cls_dbAktionen()
-    connection = db.conn()
-    cursor = connection.cursor()
-    cursor.execute(statement)
-   # data = [{name: color} for (name, color) in cursor]
-    row_headers = [x[0] for x in cursor.description]  # this will extract row headers
-    rv = cursor.fetchall()
-    json_data = []
-    for result in rv:
-        json_data.append(dict(zip(row_headers, result)))
-    data = json.dumps(json_data, default=str)
-    data = json.loads(data)
+    headers = {'Content-type': 'application/json'}
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    r = requests.post(url_persist + '/api/v1.0/getKunden', headers=headers)
+    data = r.json()
+ #   data = json.loads(data)
     print(data)
-  #  return json.dumps({'test_table': results})
     return render_template('index.html', title='Index', data=data)
 
 
@@ -114,21 +111,27 @@ def modifyKunde():
 
     kunde_id = request.args.get('kunde_id')
 
-    statement = "SELECT * FROM kunden where kunde_id = " + kunde_id
-    db = cls_dbAktionen()
-    connection = db.conn()
-    cursor = connection.cursor()
-    cursor.execute(statement)
-    # data = [{name: color} for (name, color) in cursor]
-    row_headers = [x[0] for x in cursor.description]  # this will extract row headers
-    rv = cursor.fetchall()
-    json_data = []
-    for result in rv:
-        json_data.append(dict(zip(row_headers, result)))
-    data = json.dumps(json_data, default=str)
-    data = json.loads(data)
-    form = KundeForm()
-    form.kundeAnrede.data = data[0]['anrede']
+    payload = {
+        'kunde_id': kunde_id
+    }
+    headers = {
+        'Content-type': 'application/json'}
+
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    r = requests.post(url_persist + '/api/v1.0/getKunde', json=payload, headers=headers)
+    data = r.json()
+
+    print("Ergebnis getKunde: ", r, data)
+
+    form = KundeForm(kundeAnrede=str(data['kunde'][0]['anrede']), kundeRolle=str(data['kunde'][0]['rolle_id']))
+ #   form.kundeAnrede.data = str(data['kunde'][0]['anrede'])
+ #   form.kundeRolle.data = str(data['kunde'][0]['rolle_id'])
     form.kunde_id.data = kunde_id
     #  return json.dumps({'test_table': results})
     # Verarbeitung, wenn Formular validiert werden kann
@@ -143,15 +146,7 @@ def modifyKunde():
             'plz': form.kundePlz.data,
             'ort': form.kundeOrt.data
         }
-        headers = {
-            'Content-type': 'application/json'}
-        #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
-        if config.get('Service Mock', 'mock') != "True":
-            url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
-            url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
-        else:
-            url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
-            url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+        print(payload)
 
         r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(

@@ -21,10 +21,17 @@
         </tr>
     </thead>
     <tbody>
-    {% for eintrag in data %}
+    {% for eintrag in data['kunden'] %}
         <tr>
             <td>{{ eintrag['kunde_id'] }}</td>
-            <td>{{ eintrag['anrede'] }}</td>
+
+            <td>{% if eintrag['anrede'] == "1" %}
+                Herr
+                {%elif eintrag['anrede'] == "2" %}
+                Frau
+                {%elif eintrag['anrede'] == "3" %}
+                Divers
+                {% endif %}</td>
             <td>{{ eintrag['vorname'] }}</td>
             <td>{{ eintrag['name'] }}</td>
             <td>{{ eintrag['strasse'] }}</td>

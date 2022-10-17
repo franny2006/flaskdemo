@@ -14,42 +14,42 @@
         </p>
         <p>
             {{ form.kundeAnrede.label }}<br>
-            {{ form.kundeAnrede(size=1, default=data[0]['anrede']) }}<br>
+            {{ form.kundeAnrede(size=1) }}<br>
             {% for error in form.kundeAnrede.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.kundeName.label }}<br>
-            {{ form.kundeName(size=32, value=data[0]['name']) }}<br>
+            {{ form.kundeName(size=32, value=data['kunde'][0]['name']) }}<br>
             {% for error in form.kundeName.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.kundeVorname.label }}<br>
-            {{ form.kundeVorname(size=32, value=data[0]['vorname']) }}<br>
+            {{ form.kundeVorname(size=32, value=data['kunde'][0]['vorname']) }}<br>
             {% for error in form.kundeVorname.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.kundeStrasse.label }}<br>
-            {{ form.kundeStrasse(size=32, value=data[0]['strasse']) }}<br>
+            {{ form.kundeStrasse(size=32, value=data['kunde'][0]['strasse']) }}<br>
             {% for error in form.kundeStrasse.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.kundePlz.label }}<br>
-            {{ form.kundePlz(size=6, value=data[0]['plz']) }}<br>
+            {{ form.kundePlz(size=6, value=data['kunde'][0]['plz']) }}<br>
             {% for error in form.kundePlz.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.kundeOrt.label }}<br>
-            {{ form.kundeOrt(size=32, value=data[0]['ort']) }}<br>
+            {{ form.kundeOrt(size=32, value=data['kunde'][0]['ort']) }}<br>
             {% for error in form.kundeOrt.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

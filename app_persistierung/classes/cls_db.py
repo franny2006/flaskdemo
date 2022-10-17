@@ -4,6 +4,7 @@ sys.path.insert(1, '../../')
 import mysql.connector
 import mysql.connector
 from configparser import ConfigParser
+import json
 
 class cls_dbAktionen():
     def __init__(self):
@@ -40,6 +41,20 @@ class cls_dbAktionen():
         connection = mysql.connector.connect(**configuration)
         return connection
 
+    def getKunden(self):
+        sql = "SELECT * FROM kunden order by kunde_id"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+        data = json.dumps(json_data, default=str)
+        data = json.loads(data)
+        return data
+
     def addKunde(self, dictKunde):
         sql = "INSERT INTO kunden (rolle_id, anrede, name, vorname, strasse, plz, ort) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
@@ -54,6 +69,7 @@ class cls_dbAktionen():
         return kunde_id
 
     def updateKunde(self, dictKunde):
+        print(dictKunde)
         sql = "UPDATE kunden " \
               "SET rolle_id = %s, " \
               "anrede = %s, " \
@@ -74,15 +90,20 @@ class cls_dbAktionen():
         connection.close()
         return kunde_id
 
-    def viewKunde(self, dictKunde):
-        sql = "SELECT * FROM kunden where kunde_id = " + dictKunde['kunde_id']
+    def getKunde(self, kunde_id):
+        sql = "SELECT * FROM kunden where kunde_id = " + kunde_id
         connection = self.conn()
         cursor = connection.cursor()
         cursor.execute(sql)
-        kunde_id = cursor.lastrowid
-        connection.commit()
-        cursor.close()
-        connection.close()
-        return kunde_id
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+        data = json.dumps(json_data, default=str)
+        data = json.loads(data)
+        return data
+
+
 
 
