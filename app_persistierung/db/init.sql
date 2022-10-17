@@ -1,11 +1,6 @@
 create database devopsroles;
 use devopsroles;
 
-CREATE TABLE demo_kunden (
-  id ()
-  name VARCHAR(20),
-  color VARCHAR(10)
-);
 
 CREATE TABLE kunden (
   kunde_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -30,13 +25,7 @@ CREATE TABLE kfz (
 );
 
 
-INSERT INTO test_table
-  (name, color)
-VALUES
-  ('dev', 'blue'),
-  ('pro', 'yellow');
-
 INSERT INTO kunden
-  (rolle_id, anrede, vorname, name, strasse, plz, ort)
+  (rolle_id, anrede, vorname, name, strasse, plz, ort, geburtsdatum)
 VALUES
-  ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11111', 'Musterstadt');
+  ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11111', 'Musterstadt', '01.01.1970');

@@ -35,6 +35,6 @@ VALUES
   ('dev', 'blue');
 
 INSERT INTO kunden
-  (rolle_id, anrede, vorname, name, strasse, plz, ort)
+  (rolle_id, anrede, vorname, name, strasse, plz, ort, geburtsdatum)
 VALUES
-  ('1', '3', 'Maria', 'Musterfrau', 'Musterstrasse', '11112', 'Musterstadt');
+  ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11111', 'Musterstadt', '01.01.1970');
