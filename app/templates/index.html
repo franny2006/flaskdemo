@@ -18,6 +18,7 @@
             <th>zuletzt geändert</th>
             <th scope="col" style="width: 10%">Bearbeiten</th>
             <th scope="col" style="width: 10%">Löschen</th>
+            <th scope="col" style="width: 10%">Antrag</th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
             <td>{{ eintrag['timestamp'] }}</td>
             <td><a href="modifyKunde?kunde_id={{ eintrag['kunde_id'] }}">bearbeiten</a></td>
             <td><a href="deleteKunde?kunde_id={{ eintrag['kunde_id'] }}">löschen</a></td>
+            <td><a href="createOffer?kunde_id={{ eintrag['kunde_id'] }}">Antrag</a></td>
         </tr>
     {% endfor %}
 

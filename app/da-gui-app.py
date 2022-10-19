@@ -6,7 +6,7 @@ import requests
 
 from classes.cls_db import cls_dbAktionen
 from classes.cls_verwaltung import cls_verwaltung
-from forms import KundeForm
+from forms import KundeForm, OfferForm
 
 from configparser import ConfigParser
 config = ConfigParser()
@@ -79,7 +79,8 @@ def addKunde():
             'vorname': form.kundeVorname.data,
             'strasse': form.kundeStrasse.data,
             'plz': form.kundePlz.data,
-            'ort': form.kundeOrt.data
+            'ort': form.kundeOrt.data,
+            'geburtsdatum': form.kundeGeburtsdatum.data.isoformat()
         }
         headers = {'Content-type': 'application/json'}
      #   r = requests.post('http://localhost:5010/api/v1/resources/verifyKunde', json=payload, headers=headers)
@@ -144,7 +145,8 @@ def modifyKunde():
             'vorname': form.kundeVorname.data,
             'strasse': form.kundeStrasse.data,
             'plz': form.kundePlz.data,
-            'ort': form.kundeOrt.data
+            'ort': form.kundeOrt.data,
+            'geburtsdatum': form.kundeGeburtsdatum.data.isoformat()
         }
         print(payload)
 
@@ -165,17 +167,60 @@ def modifyKunde():
 
 
 
+@app.route('/createOffer', methods=['GET', 'POST'])
+def createOffer():
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+
+    kunde_id = request.args.get('kunde_id')
+
+    payload = {
+        'kunde_id': kunde_id
+    }
+    headers = {
+        'Content-type': 'application/json'}
 
 
 
+    r = requests.post(url_persist + '/api/v1.0/getKunde', json=payload, headers=headers)
+    data = r.json()
 
+    print("Ergebnis getKunde: ", r, data)
 
-    if not status:
-        status = {'ok: ': 'Prüfungen erfolgreich'}
+    form = OfferForm()
+ #   form.kundeAnrede.data = str(data['kunde'][0]['anrede'])
+ #   form.kundeRolle.data = str(data['kunde'][0]['rolle_id'])
+    form.angebotKundeId.data = kunde_id
+    #  return json.dumps({'test_table': results})
+    # Verarbeitung, wenn Formular validiert werden kann
+    if form.validate_on_submit():
+        payload = {
+            'kunde_id': form.angebotKundeId.data,
+            'name': form.angebotKundeName.data,
+            'vorname': form.angebotKundeVorname.data,
+            'strasse': form.angebotKundeStrasse.data,
+            'plz': form.angebotKundePlz.data,
+            'ort': form.angebotKundeOrt.data
+        }
+        print(payload)
 
-    print(status)
+        r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
+        flash('Daten gespeichert für Kunde {} {}'.format(
+            form.angebotKundeVorname.data, form.angebotKundeName.data))
+        dict_status = r.json()
 
-    return status
+        print("Status Aufruf: ", dict_status)
+        if 'nok' in dict_status['status']['result']:
+            flash('Fehler bei {} {}: {}'.format(form.angebotKundeVorname.data, form.angebotKundeName.data, dict_status['status']))
+        else:
+            r = requests.post(url_persist + '/api/v1.0/updateKunde', json=payload, headers=headers)
+            return redirect('/viewKunden')
+    return render_template('createOffer.html', title='Kunde bearbeiten', form=form, data=data)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

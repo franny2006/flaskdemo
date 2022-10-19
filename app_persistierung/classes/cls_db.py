@@ -56,9 +56,9 @@ class cls_dbAktionen():
         return data
 
     def addKunde(self, dictKunde):
-        sql = "INSERT INTO kunden (rolle_id, anrede, name, vorname, strasse, plz, ort) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO kunden (rolle_id, anrede, name, vorname, strasse, plz, ort, geburtsdatum) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
-               dictKunde['plz'], dictKunde['ort'])
+               dictKunde['plz'], dictKunde['ort'], dictKunde['geburtsdatum'])
         connection = self.conn()
         cursor = connection.cursor()
         cursor.execute(sql, val)
@@ -77,10 +77,11 @@ class cls_dbAktionen():
               "vorname = %s, " \
               "strasse = %s, " \
               "plz = %s, " \
-              "ort = %s " \
+              "ort = %s, " \
+              "geburtsdatum = %s " \
               "where kunde_id = %s"
         val = (dictKunde['rolle'], dictKunde['anrede'], dictKunde['name'], dictKunde['vorname'], dictKunde['strasse'],
-               dictKunde['plz'], dictKunde['ort'], dictKunde['kunde_id'])
+               dictKunde['plz'], dictKunde['ort'], dictKunde['geburtsdatum'], dictKunde['kunde_id'])
         connection = self.conn()
         cursor = connection.cursor()
         cursor.execute(sql, val)

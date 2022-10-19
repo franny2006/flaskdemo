@@ -54,6 +54,13 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{ form.kundeGeburtsdatum.label }}<br>
+            {{ form.kundeGeburtsdatum(value=data['kunde'][0]['geburtsdatum']) }}<br>
+            {% for error in form.kundeGeburtsdatum.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
         <p>{{ form.submit() }}</p>
     </form>
 

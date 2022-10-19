@@ -40,6 +40,7 @@ def createKunde():
         'strasse': request.json.get('strasse', ""),
         'plz': request.json.get('plz', ""),
         'ort': request.json.get('ort', ""),
+        'geburtsdatum': request.json.get('geburtsdatum', ""),
     }
 
     rowId = db.addKunde(dictKunde)
@@ -61,6 +62,7 @@ def updateKunde():
         'plz': request.json.get('plz', ""),
         'ort': request.json.get('ort', ""),
         'kunde_id': request.json.get('kunde_id', ""),
+        'geburtsdatum': request.json.get('geburtsdatum', ""),
     }
 
     rowId = db.updateKunde(dictKunde)

@@ -1,5 +1,6 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField, SubmitField, HiddenField, SelectMultipleField
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, PasswordField, BooleanField, SelectField, SubmitField, HiddenField, SelectMultipleField, DateField
+
 from wtforms.validators import DataRequired
 
 class PartnerForm(FlaskForm):
@@ -23,6 +24,7 @@ class KundeForm(FlaskForm):
     kundeStrasse = StringField('Straße', validators=[DataRequired(message="Pflichtfeld")])
     kundePlz = StringField('PLZ', validators=[DataRequired(message="Pflichtfeld")])
     kundeOrt = StringField('Ort', validators=[DataRequired(message="Pflichtfeld")])
+    kundeGeburtsdatum = DateField('Geburtsdatum', format='%Y-%m-%d')
     submit = SubmitField('Kundendaten speichern')
 
 
@@ -34,7 +36,7 @@ class TarifForm(FlaskForm):
     tarifVst = StringField('Höhe VSt', validators=[DataRequired(message="Pflichtfeld")])
     submit = SubmitField('Tarif speichern')
 
-class AngebotForm_1(FlaskForm):
+class OfferForm(FlaskForm):
     angebotId = HiddenField('angebotId')
     angebotKundeId = HiddenField('KundenID', validators=[DataRequired(message="Pflichtfeld")])
     angebotKundeName = StringField('Name des Antragstellers', validators=[DataRequired(message="Pflichtfeld")])
