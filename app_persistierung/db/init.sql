@@ -15,16 +15,6 @@ CREATE TABLE kunden (
   timestamp timestamp NOT NULL DEFAULT current_timestamp()
 );
 
-CREATE TABLE kfz_typen (
-  kfz_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  hsn varchar(4) NOT NULL,
-  hersteller varchar(50) NOT NULL,
-  tsn varchar(3) NOT NULL,
-  modell varchar(50) NOT NULL,
-  anzahl varchar(50) NOT NULL
-);
-
-
 INSERT INTO kunden
   (rolle_id, anrede, vorname, name, strasse, plz, ort, geburtsdatum)
 VALUES
