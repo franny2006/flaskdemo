@@ -105,6 +105,53 @@ class cls_dbAktionen():
         data = json.loads(data)
         return data
 
+    def getKundenNamen(self):
+        sql = "select kunde_id, name, vorname from kunden"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        nameList = []
+        for row in rv:
+            kunde = {}
+            kunde['value'] = row[0]
+            kunde['label'] = row[1] + ", " + row[2]
+            nameList.append(kunde)
+        return nameList
+
+    def getHsn(self):
+        sql = "SELECT distinct hersteller, hsn FROM kfz_typen"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        herstellerList = []
+        for row in rv:
+            hersteller = {}
+            hersteller['label'] = row[0]
+            hersteller['value'] = row[1]
+            herstellerList.append(hersteller)
+        return herstellerList
+
+    def getTsn(self):
+        sql = "SELECT distinct modell, tsn, anzahl FROM kfz_typen"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        herstellerList = []
+        for row in rv:
+            hersteller = {}
+            hersteller['label'] = row[0] + ", " + row[1] + ", (Anz. Zulassungen: " + row[2] + ")"
+            hersteller['value'] = row[1]
+            herstellerList.append(hersteller)
+        return herstellerList
+
 
 
 

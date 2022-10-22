@@ -5,12 +5,13 @@
 </style>
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 
 
 
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='jquery_ui_base.css') }}">
+
       {% if title %}
       <title>{{ title }} - Demoanwendung</title>
       {% else %}
@@ -20,6 +21,8 @@
 
     </head>
     <body>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
@@ -29,9 +32,10 @@
         <a class="navbar-brand" href="#">Navigation</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="viewKunden">Home</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="viewKunden">Kundenübersicht</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="addKunde">Neuen Kunden erfassen</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="addOffer">Neuen Antrag erfassen</a></li>
                 </ul>
             </div>
         </div>

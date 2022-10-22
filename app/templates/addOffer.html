@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Angebot</h1>
+    <div class="container">
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <h3 class="bg-secondary text-white">Angaben zum Antragsteller</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                {{ form.angebotKundeNameAuswahl.label }}<br>
+                {{ form.angebotKundeNameAuswahl(size=32, class="form-control") }}<br>
+                {% for error in form.angebotKundeName.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="col-lg-6 bg-light">
+                {{ form.angebotKundeName.label }}
+                {{ form.angebotKundeName(size=32, class="form-control", readonly=true) }}<br>
+
+                {{ form.angebotKundeVorname(size=32, class="form-control", readonly=true) }}<br>
+
+                {{ form.angebotKundeStrasse(size=32, class="form-control", readonly=true) }}<br>
+
+                {{ form.angebotKundePlz(size=6, class="form-control", readonly=true) }}<br>
+
+                {{ form.angebotKundeOrt(size=32, class="form-control", readonly=true) }}<br>
+
+                {{ form.angebotKundeGeburtsdatum(class="form-control", readonly=true) }}<br>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="bg-secondary text-white">Angaben zum Fahrzeug</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                {{ form.angebotHersteller.label }}<br>
+                {{ form.angebotHersteller(class="form-control") }}<br>
+                {% for error in form.angebotHersteller.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+                {{ form.angebotTyp.label }}<br>
+                {{ form.angebotTyp(class="form-control") }}<br>
+                {% for error in form.angebotTyp.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+                {{ form.angebotKategorie.label }}<br>
+                {{ form.angebotKategorie(class="form-control") }}<br>
+                {% for error in form.angebotKategorie.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+                {{ form.angebotErstzulassung.label }}<br>
+                {{ form.angebotErstzulassung(class="form-control") }}<br>
+                {% for error in form.angebotErstzulassung.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="col-lg-6 bg-light">
+                {{ form.angebotHsn.label }}<br>
+                {{ form.angebotHsn(class="form-control", size=4, readonly=true) }}<br>
+                {% for error in form.angebotHsn.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                {{ form.angebotTsn.label }}<br>
+                {{ form.angebotTsn(class="form-control", size=10, readonly=true) }}<br>
+                {% for error in form.angebotTsn.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            <h3 class="bg-secondary text-white">Angaben zur Fahrzeugnutzung</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                {{ form.angebotKilometer.label }}<br>
+                {{ form.angebotKilometer(class="form-control") }}<br>
+                {% for error in form.angebotKilometer.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+                {{ form.angebotVerwendung.label }}<br>
+                {{ form.angebotVerwendung(class="form-control") }}<br>
+                {% for error in form.angebotVerwendung.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+
+                {{ form.angebotVersicherungsbeginn.label }}<br>
+                {{ form.angebotVersicherungsbeginn(class="form-control") }}<br>
+                {% for error in form.angebotVersicherungsbeginn.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="col-lg-6 bg-light">
+            </div>
+        </div>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+$(document).ready(function(){
+// Ajax Kundenauswahl
+    $.getJSON( "/listKundenNamen", function( data ) {
+        var data_arr = data.map(function(val){
+             return {
+             label: val.label,
+             value: val.value
+             };
+        })
+        auto(data_arr)
+    });
+
+    function auto(data_arr){
+        $("#angebotKundeNameAuswahl").autocomplete({
+            source: data_arr,
+            minLength: 2,
+            select: function(event, ui) {
+                // Set autocomplete element to display the label
+                this.value = ui.item.label;
+
+                // Store value in hidden field
+                $('#angebotKundeId').val(ui.item.value);
+                $('#angebotKundeName').val(ui.item.label);
+
+                displayKunde(ui.item.value);
+
+                // Prevent default behaviour
+                return false;
+            }
+        });
+    }
+
+    function displayKunde(kunde_id){
+        $.getJSON( "/viewKunde?kunde_id=" + kunde_id, function( data ) {
+            $('#angebotKundeVorname').val(data[0]['vorname']);
+            $('#angebotKundeName').val(data[0]['name']);
+            $('#angebotKundeStrasse').val(data[0]['strasse']);
+            $('#angebotKundePlz').val(data[0]['plz']);
+            $('#angebotKundeOrt').val(data[0]['ort']);
+            $('#angebotKundeGeburtsdatum').val(data[0]['geburtsdatum']);
+        });
+    }
+
+    // Ajax HSNauswahl
+    $.getJSON( "/listHsn", function( data ) {
+        var data_arr = data.map(function(val){
+             return {
+             label: val.label,
+             value: val.value
+             };
+        })
+        auto_Hsn(data_arr)
+    });
+
+    function auto_Hsn(data_arr){
+        $("#angebotHersteller").autocomplete({
+            source: data_arr,
+            minLength: 3,
+            select: function(event, ui) {
+                // Set autocomplete element to display the label
+                this.value = ui.item.label;
+
+
+                // Store value in hidden field
+                $('#angebotHsn').val(ui.item.value);
+
+                // displayKunde(ui.item.value);
+
+                // Prevent default behaviour
+                return false;
+            }
+        });
+    }
+
+    // Ajax TSNauswahl
+    $.getJSON( "/listTsn", function( data ) {
+        var data_arr = data.map(function(val){
+             return {
+             label: val.label,
+             value: val.value
+             };
+        })
+        auto_Typ(data_arr)
+    });
+
+    function auto_Typ(data_arr){
+        $("#angebotTyp").autocomplete({
+            source: data_arr,
+            minLength: 3,
+            select: function(event, ui) {
+                // Set autocomplete element to display the label
+                this.value = ui.item.label;
+
+
+                // Store value in hidden field
+                $('#angebotTsn').val(ui.item.value);
+
+                // displayKunde(ui.item.value);
+
+                // Prevent default behaviour
+                return false;
+            }
+        });
+    }
+
+
+
+
+
+});
+</script>
+
+{% endblock %}

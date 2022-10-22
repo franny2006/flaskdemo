@@ -84,6 +84,26 @@ def getKunde():
         return jsonify({'kunde': kunde}), 201
 
 
+@app.route('/api/v1.0/getKundenNamen', methods=['POST'])
+def getKundenNamen():
+    db = cls_dbAktionen()
+    kundenNamen = db.getKundenNamen()
+    return jsonify({'kundenNamen': kundenNamen}), 201
+
+@app.route('/api/v1.0/getHsn', methods=['POST'])
+def getHsn():
+    db = cls_dbAktionen()
+    hersteller = db.getHsn()
+    return jsonify({'hersteller': hersteller}), 201
+
+
+@app.route('/api/v1.0/getTsn', methods=['POST'])
+def getTsn():
+    db = cls_dbAktionen()
+    hersteller = db.getTsn()
+    return jsonify({'hersteller': hersteller}), 201
+
+
 
 
 

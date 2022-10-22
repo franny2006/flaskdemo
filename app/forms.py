@@ -1,5 +1,5 @@
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, BooleanField, SelectField, SubmitField, HiddenField, SelectMultipleField, DateField
+from flask_wtf import FlaskForm
+from wtforms import StringField, SelectField, SubmitField, HiddenField, SelectMultipleField, DateField
 
 from wtforms.validators import DataRequired
 
@@ -39,21 +39,24 @@ class TarifForm(FlaskForm):
 class OfferForm(FlaskForm):
     angebotId = HiddenField('angebotId')
     angebotKundeId = HiddenField('KundenID', validators=[DataRequired(message="Pflichtfeld")])
-    angebotKundeName = StringField('Name des Antragstellers', validators=[DataRequired(message="Pflichtfeld")])
-    angebotKundeVorname = StringField('')
-    angebotKundeName2 = StringField('')
-    angebotKundeStrasse = StringField('')
-    angebotKundePlz = StringField('')
-    angebotKundeOrt = StringField('')
-    angebotPartnerId = HiddenField('PartnerID', validators=[DataRequired(message="Pflichtfeld")])
-    angebotPartnerName = StringField('Name des Vermittlers', validators=[DataRequired(message="Pflichtfeld")])
-    angebotPartnerVorname = StringField('')
-    angebotPartnerName2 = StringField('')
-    angebotPartnerStrasse = StringField('')
-    angebotPartnerPlz = StringField('')
-    angebotPartnerOrt = StringField('')
+    angebotKundeNameAuswahl = StringField('Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
+    angebotKundeName = StringField('Angaben zum Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
+    angebotKundeVorname = StringField('Vorname')
+    angebotKundeStrasse = StringField('Straße')
+    angebotKundePlz = StringField('PLZ')
+    angebotKundeOrt = StringField('Ort')
+    angebotKundeGeburtsdatum = DateField('Geburtsdatum', format='%Y-%m-%d')
+    angebotHersteller = StringField('Hersteller')
+    angebotTyp = StringField('Fahrzeugtyp')
+    angebotHsn = StringField('HSN')
+    angebotTsn = StringField('TSN')
+    angebotErstzulassung = DateField('Erstzulassung', format='%Y-%m-%d')
     angebotTarifId = HiddenField('TarifId', validators=[])
     angebotTarifName = StringField('gewünschter Tarif', validators=[])
+    angebotKategorie = SelectField('Fahrzeugkategorie', choices=[('*** Bitte auswählen ***'), ('Limousine'), ('Kombi'), ('Cabrio')])
+    angebotVerwendung = SelectField('Verwendung', choices=[('*** Bitte auswählen ***'), ('privat'), ('gewerblich'), ('privat und gewerblich')])
+    angebotKilometer = SelectField('jährliche Fahrleistung', choices=[('*** Bitte auswählen ***'), ('10.000'), ('20.000'), ('30.000'), ('50.000')])
+    angebotVersicherungsbeginn = DateField('gewünschter Versicherungsbeginn', format='%Y-%m-%d')
     submit = SubmitField('Antrag speichern')
 
 class AngebotForm_2(FlaskForm):

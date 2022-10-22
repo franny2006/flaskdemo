@@ -1,5 +1,6 @@
 from typing import List, Dict
 from flask import Flask, request, jsonify, render_template, redirect, flash, jsonify, abort
+
 import mysql.connector
 import json
 import requests
@@ -15,6 +16,7 @@ config.read('config/config.ini')
 app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'you-will-never-guess'
+
 
 
 
@@ -164,6 +166,34 @@ def modifyKunde():
     return render_template('modifyKunde.html', title='Kunde bearbeiten', form=form, data=data)
 
 
+@app.route('/addOffer', methods=['GET', 'POST'])
+def addOffer():
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    form = OfferForm()
+
+    # Verarbeitung, wenn Formular validiert werden kann
+    if form.validate_on_submit():
+        payload = {
+            'kunde_id': form.angebotKundeId.data,
+            'name': form.angebotKundeName.data,
+            'vorname': form.angebotKundeVorname.data,
+            'strasse': form.angebotKundeStrasse.data,
+            'plz': form.angebotKundePlz.data,
+            'ort': form.angebotKundeOrt.data
+        }
+        print(payload)
+
+  #      r = requests.post(url_rules + '/api/v1/resources/verifyOffer', json=payload, headers=headers)
+        flash('Daten gespeichert für Kunde {} {}'.format(
+            form.angebotKundeVorname.data, form.angebotKundeName.data))
+  #      dict_status = r.json()
+    return render_template('addOffer.html', title='Angebot erstellen', form=form)
 
 
 
@@ -220,7 +250,80 @@ def createOffer():
         else:
             r = requests.post(url_persist + '/api/v1.0/updateKunde', json=payload, headers=headers)
             return redirect('/viewKunden')
-    return render_template('createOffer.html', title='Kunde bearbeiten', form=form, data=data)
+    return render_template('addOffer.html', title='Kunde bearbeiten', form=form, data=data)
+
+@app.route('/listKundenNamen')
+def listKundenNamen():
+    print("Kundennamen Aufruf")
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    headers = {'Content-type': 'application/json'}
+    r = requests.post(url_persist + '/api/v1.0/getKundenNamen', headers=headers)
+    data = r.json()
+    print("Kundennamen: ", data['kundenNamen'])
+    return jsonify(data['kundenNamen'])
+
+
+@app.route('/viewKunde', methods=['GET', 'POST'])
+def viewKunde():
+
+    kunde_id = request.args.get('kunde_id')
+
+    payload = {
+        'kunde_id': kunde_id
+    }
+    headers = {
+        'Content-type': 'application/json'}
+
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    r = requests.post(url_persist + '/api/v1.0/getKunde', json=payload, headers=headers)
+    data = r.json()
+    return jsonify(data['kunde'])
+
+
+@app.route('/listHsn')
+def listHsn():
+
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    headers = {'Content-type': 'application/json'}
+    r = requests.post(url_persist + '/api/v1.0/getHsn', headers=headers)
+    data = r.json()
+    print("Hsn: ", data['hersteller'][0])
+    return jsonify(data['hersteller'])
+
+@app.route('/listTsn')
+def listTsn():
+
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    headers = {'Content-type': 'application/json'}
+    r = requests.post(url_persist + '/api/v1.0/getTsn', headers=headers)
+    data = r.json()
+    print("Tsn: ", data['hersteller'][0])
+    return jsonify(data['hersteller'])
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
