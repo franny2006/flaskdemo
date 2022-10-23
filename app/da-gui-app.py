@@ -177,22 +177,35 @@ def addOffer():
 
     form = OfferForm()
 
+    headers = {
+        'Content-type': 'application/json'}
     # Verarbeitung, wenn Formular validiert werden kann
     if form.validate_on_submit():
         payload = {
             'kunde_id': form.angebotKundeId.data,
-            'name': form.angebotKundeName.data,
-            'vorname': form.angebotKundeVorname.data,
-            'strasse': form.angebotKundeStrasse.data,
-            'plz': form.angebotKundePlz.data,
-            'ort': form.angebotKundeOrt.data
+            'fuehrerschein': form.angebotFuehrerschein.data.isoformat(),
+            'hsn': form.angebotHsn.data,
+            'tsn': form.angebotTsn.data,
+            'kategorie': form.angebotKategorie.data,
+            'ez': form.angebotErstzulassung.data.isoformat(),
+            'fahrleistung': form.angebotKilometer.data,
+            'verwendung': form.angebotVerwendung.data,
+            'vers_beginn': form.angebotVersicherungsbeginn.data.isoformat()
         }
         print(payload)
 
-  #      r = requests.post(url_rules + '/api/v1/resources/verifyOffer', json=payload, headers=headers)
+        r = requests.post(url_rules + '/api/v1/resources/verifyOffer', json=payload, headers=headers)
+        dict_status = r.json()
+        print("Status Prüfungen Offer: ", dict_status)
         flash('Daten gespeichert für Kunde {} {}'.format(
             form.angebotKundeVorname.data, form.angebotKundeName.data))
   #      dict_status = r.json()
+        print("Status Aufruf: ", dict_status)
+        if 'nok' in dict_status['status']['result']:
+            flash('Fehler bei {} {}: {}'.format(form.angebotKundeVorname.data, form.angebotKundeName.data, dict_status['status']))
+        else:
+            r = requests.post(url_persist + '/api/v1.0/addOffer', json=payload, headers=headers)
+            return redirect('/viewOffers')
     return render_template('addOffer.html', title='Angebot erstellen', form=form)
 
 
@@ -239,7 +252,7 @@ def createOffer():
         }
         print(payload)
 
-        r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
+   #     r = requests.post(url_rules + '/api/v1/resources/verifyKunde', json=payload, headers=headers)
         flash('Daten gespeichert für Kunde {} {}'.format(
             form.angebotKundeVorname.data, form.angebotKundeName.data))
         dict_status = r.json()
@@ -248,7 +261,7 @@ def createOffer():
         if 'nok' in dict_status['status']['result']:
             flash('Fehler bei {} {}: {}'.format(form.angebotKundeVorname.data, form.angebotKundeName.data, dict_status['status']))
         else:
-            r = requests.post(url_persist + '/api/v1.0/updateKunde', json=payload, headers=headers)
+            r = requests.post(url_persist + '/api/v1.0/addOffer', json=payload, headers=headers)
             return redirect('/viewKunden')
     return render_template('addOffer.html', title='Kunde bearbeiten', form=form, data=data)
 
@@ -323,6 +336,46 @@ def listTsn():
     data = r.json()
     print("Tsn: ", data['hersteller'][0])
     return jsonify(data['hersteller'])
+
+
+@app.route('/viewOffers')
+def viewOffers() -> str:
+    headers = {'Content-type': 'application/json'}
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    r = requests.post(url_persist + '/api/v1.0/getOffers', headers=headers)
+    data = r.json()
+ #   data = json.loads(data)
+    print(data)
+    return render_template('antraege.html', title='Index', data=data)
+
+@app.route('/viewOffer', methods=['GET', 'POST'])
+def viewOffer():
+
+    antrag_id = request.args.get('antrag_id')
+
+    payload = {
+        'antrag_id': antrag_id
+    }
+    headers = {
+        'Content-type': 'application/json'}
+
+    if config.get('Service Mock', 'mock') != "True":
+        url_rules = "http://" + config.get('Service Regelengine', 'host') + ":" + config.get('Service Regelengine', 'port')
+        url_persist = "http://" + config.get('Service Persistierung', 'host') + ":" + config.get('Service Persistierung', 'port')
+    else:
+        url_rules = "http://" + config.get('Service Regelengine Mock', 'host') + ":" + config.get('Service Regelengine Mock', 'port')
+        url_persist = "http://" + config.get('Service Persistierung Mock', 'host') + ":" + config.get('Service Persistierung Mock', 'port')
+
+    r = requests.post(url_persist + '/api/v1.0/getOffer', json=payload, headers=headers)
+    data = r.json()
+
+    return render_template('viewAntrag.html', title='Angebot', data=data['offer'])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container features">
+    <p></p>
+    <h3>Antragsübersicht</h3>
+    <table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Antragsteller</th>
+            <th>HSN</th>
+            <th>TSN</th>
+            <th>kategorie</th>
+            <th>ez</th>
+            <th>Versicherungsbeginn</th>
+            <th>Erstellungsdatum</th>
+            <th scope="col" style="width: 10%">Details</th>
+            <th scope="col" style="width: 10%">Löschen</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for eintrag in data['offers'] %}
+        <tr>
+            <td>{{ eintrag['antrag_id'] }}</td>
+            <td>{{ eintrag['name'] }} {{ eintrag['vorname'] }}</td>
+            <td>{{ eintrag['hsn'] }}</td>
+            <td>{{ eintrag['tsn'] }}</td>
+            <td>{{ eintrag['kategorie'] }}</td>
+            <td>{{ eintrag['ez'] }}</td>
+            <td>{{ eintrag['vers_beginn'] }}</td>
+            <td>{{ eintrag['timestamp'] }}</td>
+            <td><a href="viewOffer?antrag_id={{ eintrag['antrag_id'] }}">bearbeiten</a></td>
+            <td><a href="deleteOffer?antrag_id={{ eintrag['antrag_id'] }}">löschen</a></td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+
+
+    </table>
+</div>
+
+
+
+
+{% endblock %}

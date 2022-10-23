@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container features">
+    <p></p>
+    <h3>Antrag</h3>
+    <table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th>Antragsdaten</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Antragsteller</td>
+            <td>{{ data[0]['name'] }}, {{ data[0]['vorname'] }}</td>
+        </tr>
+        <tr>
+            <td>Adresse</td>
+            <td>{{ data[0]['strasse'] }},  {{ data[0]['plz'] }} {{ data[0]['ort'] }}</td>
+        </tr>
+        <tr>
+            <td>Geburtsdatum</td>
+            <td>{{ data[0]['geburtsdatum'] }}</td>
+        </tr>
+        <tr>
+            <td>Führerschein seit</td>
+            <td>{{ data[0]['fuehrerschein'] }}</td>
+        </tr>
+
+
+        <tr>
+            <td>HSN / TSN</td>
+            <td>{{ data[0]['hsn'] }} / {{ data[0]['tsn'] }} ({{ data[0]['kategorie'] }})</td>
+        </tr>
+        <tr>
+            <td>jährliche Fahrleistung</td>
+            <td>{{ data[0]['fahrleistung'] }} Kilometer - Nutzung: {{ data[0]['verwendung'] }}</td>
+        </tr>
+
+    </tbody>
+
+
+    </table>
+</div>
+
+
+
+
+{% endblock %}

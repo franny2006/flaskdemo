@@ -38,13 +38,14 @@ class TarifForm(FlaskForm):
 
 class OfferForm(FlaskForm):
     angebotId = HiddenField('angebotId')
-    angebotKundeId = HiddenField('KundenID', validators=[DataRequired(message="Pflichtfeld")])
+    angebotKundeId = HiddenField()
     angebotKundeNameAuswahl = StringField('Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
     angebotKundeName = StringField('Angaben zum Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
     angebotKundeVorname = StringField('Vorname')
     angebotKundeStrasse = StringField('Straße')
     angebotKundePlz = StringField('PLZ')
     angebotKundeOrt = StringField('Ort')
+    angebotFuehrerschein = DateField('Führerschein seit', format='%Y-%m-%d')
     angebotKundeGeburtsdatum = DateField('Geburtsdatum', format='%Y-%m-%d')
     angebotHersteller = StringField('Hersteller')
     angebotTyp = StringField('Fahrzeugtyp')

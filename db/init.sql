@@ -20,6 +20,19 @@ INSERT INTO kunden
 VALUES
   ('1', 'Frau', 'Maria', 'Musterfrau', 'Musterstrasse', '11111', 'Musterstadt', '01.01.1970');
 
+CREATE TABLE antraege (
+  antrag_id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  kunde_id varchar(4) NOT NULL,
+  fuehrerschein varchar(20) NOT NULL,
+  hsn varchar(50) NOT NULL,
+  tsn varchar(3) NOT NULL,
+  kategorie varchar(50) NOT NULL,
+  ez varchar(50) NOT NULL,
+  fahrleistung varchar(50) NOT NULL,
+  verwendung varchar(50) NOT NULL,
+  vers_beginn varchar(50) NOT NULL,
+  timestamp timestamp NOT NULL DEFAULT current_timestamp()
+);
 
 CREATE TABLE kfz_typen (
   hsn varchar(4) NOT NULL,

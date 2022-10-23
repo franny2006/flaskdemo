@@ -152,6 +152,45 @@ class cls_dbAktionen():
             herstellerList.append(hersteller)
         return herstellerList
 
+    def addOffer(self, dictOffer):
+        sql = "INSERT INTO antraege (kunde_id, fuehrerschein, hsn, tsn, kategorie, ez, fahrleistung, verwendung, vers_beginn) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (dictOffer['kunde_id'], dictOffer['fuehrerschein'], dictOffer['hsn'], dictOffer['tsn'], dictOffer['kategorie'], dictOffer['ez'],
+               dictOffer['fahrleistung'], dictOffer['verwendung'], dictOffer['vers_beginn'])
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql, val)
+        angebot_id = cursor.lastrowid
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return angebot_id
 
+    def getOffers(self):
+        sql = "SELECT * FROM kunden k, antraege a where a.kunde_id = k.kunde_id order by antrag_id"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+        data = json.dumps(json_data, default=str)
+        data = json.loads(data)
+        return data
+
+    def getOffer(self, offerId):
+        sql = "SELECT * FROM kunden k, antraege a where antrag_id = " + offerId + " and a.kunde_id = k.kunde_id order by antrag_id"
+        connection = self.conn()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row_headers = [x[0] for x in cursor.description]  # this will extract row headers
+        rv = cursor.fetchall()
+        json_data = []
+        for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+        data = json.dumps(json_data, default=str)
+        data = json.loads(data)
+        return data
 
 

@@ -104,6 +104,44 @@ def getTsn():
     return jsonify({'hersteller': hersteller}), 201
 
 
+@app.route('/api/v1.0/addOffer', methods=['POST'])
+def createOffer():
+    print("ja")
+    if not request.json or not 'kunde_id' in request.json:
+        abort(400)
+    db = cls_dbAktionen()
+    dictOffer = {
+        'kunde_id': request.json['kunde_id'],
+        'fuehrerschein': request.json.get('fuehrerschein'),
+        'hsn': request.json['hsn'],
+        'tsn': request.json['tsn'],
+        'kategorie': request.json.get('kategorie'),
+        'ez': request.json.get('ez'),
+        'fahrleistung': request.json.get('fahrleistung'),
+        'verwendung': request.json.get('verwendung'),
+        'vers_beginn': request.json.get('vers_beginn'),
+    }
+
+    rowId = db.addOffer(dictOffer)
+    return jsonify({'offer': dictOffer}), 201
+    #return rowId
+
+@app.route('/api/v1.0/getOffers', methods=['POST'])
+def getOffers():
+    db = cls_dbAktionen()
+    offers = db.getOffers()
+    return jsonify({'offers': offers}), 201
+
+@app.route('/api/v1.0/getOffer', methods=['POST'])
+def getOffer():
+    if not request.json or not 'antrag_id' in request.json:
+        abort(400)
+    db = cls_dbAktionen()
+    offer = db.getOffer(request.json['antrag_id'])
+    if len(offer) == 0:
+        abort(404)
+    else:
+        return jsonify({'offer': offer}), 201
 
 
 
