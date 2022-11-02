@@ -30,13 +30,13 @@ def open_browser(context, browsertyp, status_headless):
             options.headless = True
         else:
             options.headless = False
-        browser = webdriver.Chrome('./steps/webdriver/chromedriver', options=options)
+        browser = webdriver.Chrome('./features/steps/webdriver/chromedriver', options=options)
         context.browsertyp = "chrome"
     else:
         options = webdriver.FirefoxOptions()
         if status_headless == 'aktiv':
             options.add_argument("--headless")
-        browser = webdriver.Firefox('./steps/webdriver/', options=options)
+        browser = webdriver.Firefox('./features/steps/webdriver/', options=options)
         context.browsertyp = "firefox"
 
 
