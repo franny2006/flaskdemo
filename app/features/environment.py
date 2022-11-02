@@ -31,7 +31,7 @@ def open_browser(context, browsertyp, status_headless):
         else:
             options.headless = False
       #  browser = webdriver.Chrome('./features/steps/webdriver/chromedriver', options=options)
-        browser = webdriver.Chrome('/usr/lib/chromedriver', options=options)
+        browser = webdriver.Chrome('/usr/local/bin/chromedriver', options=options)
 
         context.browsertyp = "chrome"
     else:
