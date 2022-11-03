@@ -181,6 +181,8 @@ def addOffer():
         'Content-type': 'application/json'}
     # Verarbeitung, wenn Formular validiert werden kann
     if form.validate_on_submit():
+        if form.angebotKundeId.data == "":
+            form.angebotKundeId.data = "999"
         payload = {
             'kunde_id': form.angebotKundeId.data,
             'fuehrerschein': form.angebotFuehrerschein.data.isoformat(),
