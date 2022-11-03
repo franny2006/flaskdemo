@@ -24,7 +24,7 @@ node {
                 writeFile file:'dummy', text:''
             }
             sh 'ls -l'
-            sh 'behave  --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
+            sh 'behave ./features/demo.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
         }
 
     }
