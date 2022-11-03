@@ -6,36 +6,48 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 driver = webdriver.Chrome('./chromedriver.exe')
 
-driver.get("http://38.242.131.123:5000/addKunde")
+driver.get("http://38.242.131.123:5000/addOffer")
 
-WebDriverWait(driver, timeout=3).until(lambda d: d.find_element(By.NAME,"kundeRolle"))
+WebDriverWait(driver, timeout=3).until(lambda d: d.find_element(By.NAME,"angebotKundeNameAuswahl"))
 
-rolle = Select(driver.find_element(By.NAME, "kundeRolle"))
-rolle.select_by_visible_text('Natürliche Person')
+name = driver.find_element(By.NAME, "angebotKundeNameAuswahl")
+name.send_keys('Müller, Marianne')
 
-anrede = Select(driver.find_element(By.NAME, "kundeAnrede"))
-anrede.select_by_visible_text('Herr')
+name = driver.find_element(By.NAME, "angebotFuehrerschein")
+name.send_keys('17.11.1988')
 
-name = driver.find_element(By.NAME, "kundeName")
-name.send_keys('Name...')
+name = driver.find_element(By.NAME, "angebotHersteller")
+name.send_keys('BAYER.MOT.WERKE-BMW')
 
-vorname = driver.find_element(By.NAME, "kundeVorname")
-vorname.send_keys('Vorname...')
+name = driver.find_element(By.NAME, "angebotHsn")
+name.send_keys('005')
 
-strasse = driver.find_element(By.NAME, "kundeStrasse")
-strasse.send_keys('strasse...')
+name = driver.find_element(By.NAME, "angebotTyp")
+name.send_keys('330D, 661, (Anz. Zulassungen: 1.152)')
 
-plz = driver.find_element(By.NAME, "kundePlz")
-plz.send_keys('plz...')
+name = driver.find_element(By.NAME, "angebotTsn")
+name.send_keys('661')
 
-ort = driver.find_element(By.NAME, "kundeOrt")
-ort.send_keys('Ort...')
+name = driver.find_element(By.NAME, "angebotKategorie")
+name.send_keys('Limousine')
 
-geburtsdatum = driver.find_element(By.NAME, "kundeGeburtsdatum")
-geburtsdatum.send_keys('11.11.1977')
+name = driver.find_element(By.NAME, "angebotErstzulassung")
+name.send_keys('17.11.2021')
 
-driver.find_element(By.XPATH, '//*[@value="Kundendaten speichern"]').click()
+rolle = Select(driver.find_element(By.NAME, "angebotKilometer"))
+rolle.select_by_visible_text('20.000')
+
+rolle = Select(driver.find_element(By.NAME, "angebotVerwendung"))
+rolle.select_by_visible_text('privat')
+
+name = driver.find_element(By.NAME, "angebotVersicherungsbeginn")
+name.send_keys('01.11.2022')
 
 
-meldung = driver.find_element(By.XPATH, "/html/body/ul/li[2]").text
-print("Response: ", meldung)
+
+
+driver.find_element(By.XPATH, '//*[@value="Antrag speichern"]').click()
+
+
+#meldung = driver.find_element(By.XPATH, "/html/body/ul/li[2]").text
+#print("Response: ", meldung)
