@@ -182,7 +182,7 @@ def addOffer():
     # Verarbeitung, wenn Formular validiert werden kann
     if form.validate_on_submit():
         if form.angebotKundeId.data == "":
-            form.angebotKundeId.data = "999"
+            form.angebotKundeId.data = "1"
         payload = {
             'kunde_id': form.angebotKundeId.data,
             'fuehrerschein': form.angebotFuehrerschein.data.isoformat(),
