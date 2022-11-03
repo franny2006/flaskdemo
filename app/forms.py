@@ -40,7 +40,7 @@ class OfferForm(FlaskForm):
     angebotId = HiddenField('angebotId')
     angebotKundeId = HiddenField()
     angebotKundeNameAuswahl = StringField('Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
- #   angebotKundeName = StringField('Angaben zum Antragsteller', validators=[DataRequired(message="Pflichtfeld")])
+    angebotKundeName = StringField('Angaben zum Antragsteller')
     angebotKundeVorname = StringField('Vorname')
     angebotKundeStrasse = StringField('Straße')
     angebotKundePlz = StringField('PLZ')
