@@ -110,6 +110,10 @@ def createOffer():
     if not request.json or not 'kunde_id' in request.json:
         abort(400)
     db = cls_dbAktionen()
+
+    if not request.json['kunde_id'] or request.json['kunde_id'] == '':
+        request.json['kunde_id'] = '999'
+
     dictOffer = {
         'kunde_id': request.json['kunde_id'],
         'fuehrerschein': request.json.get('fuehrerschein'),
