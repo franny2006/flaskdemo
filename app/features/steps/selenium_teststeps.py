@@ -10,12 +10,29 @@ from behave import fixture
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+import time
 
 
 
 @given("Sachbearbeiter öffnet Webseite '{url}'")
 def step_getUrl(context, url):
+    # Verzögern, bis DB-Server gestartet ist
+    systemUp = False
+    context.driver.get("http://38.242.131.123:5000/viewKunden")
+    titelStartseite = context.driver.title
+
+    anzRetries = 10
+    i = 0
+    while i < anzRetries:
+        if "InterfaceError" in titelStartseite:
+            time.sleep(1)
+            i = i+1
+        else:
+            systemUp = True
+            i = 10
+    assert systemUp is True, f'Seite konnte nicht geladen werden'
     context.driver.get(url)
+
 
 @when("Sachbearbeiter wählt {selected} in Feld *{feldname}*")
 def step_select(context, selected, feldname):
