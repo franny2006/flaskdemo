@@ -13,12 +13,13 @@ Feature: Kunden erfassen
     When Sachbearbeiter schreibt <Geburtsdatum> in Feld *kundeGeburtsdatum*
     When Sachbearbeiter klickt auf Button [Kundendaten speichern]
     Then Das System antwortet mit Status <Status>
+    And Das System zeigt den Seitentitel <Seitentitel>
 
     Examples:
-    | Rolle                   | Anrede        | Name            | Vorname       | Strasse         | Plz   | Ort         | Geburtsdatum  | Status                                      |
-    | Juristische Person      | Frau          | Müller          | Marianne      | Hauptstrasse 2  | 20444 | Düsseldorf  | 24.12.1979    | Daten gespeichert für Kunde Marianne Müller |
-    | Natürliche Person       | Herr          | Maier           | Hans          | Marktplatz 99   | 86654 | Obersdorf   | 01.01.1969    | Daten gespeichert für Kunde Hans Maier      |
-    | Sonstiges               | Divers        | Huber           | Ditto         | Marienplatz 1   | 81369 | München     | 31.03.1984    | Daten gespeichert für Kunde Ditto Huber      |
+    | Rolle                   | Anrede        | Name            | Vorname       | Strasse         | Plz   | Ort         | Geburtsdatum  | Status                                      | Seitentitel           |
+    | Juristische Person      | Frau          | Müller          | Marianne      | Hauptstrasse 2  | 20444 | Düsseldorf  | 24.12.1979    | Daten gespeichert für Kunde Marianne Müller | Index - Demoanwendung |
+    | Natürliche Person       | Herr          | Maier           | Hans          | Marktplatz 99   | 86654 | Obersdorf   | 01.01.1969    | Daten gespeichert für Kunde Hans Maier      | Index - Demoanwendung |
+    | Sonstiges               | Divers        | Huber           | Ditto         | Marienplatz 1   | 81369 | München     | 31.03.1984    | Daten gespeichert für Kunde Ditto Huber     | Index - Demoanwendung |
 
 
   Scenario Outline: Kunde erfassen Negativfälle

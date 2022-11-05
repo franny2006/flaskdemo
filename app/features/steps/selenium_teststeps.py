@@ -77,6 +77,11 @@ def step_result(context, returncode):
 
     assert rcKorrekt is True, f'Returncode SOLL = {returncode} - IST = {rcSystem}'
 
+@then("Das System zeigt den Seitentitel {seitentitel}")
+def step_seitentitel(context, seitentitel):
+    titel = context.driver.title
+    assert seitentitel == titel, f'Soll: {seitentitel} / IST: {titel}'
+
 
 @then("Die Übersichtsseite wird angezeigt")
 def step_result(context):
