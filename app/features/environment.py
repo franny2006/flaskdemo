@@ -28,6 +28,8 @@ def open_browser(context, browsertyp, status_headless):
 
     if browsertyp == "chrome":
         options = Options()
+    #    options.binary_location = "/usr/local/bin/chromedriver"
+        options.add_argument('--no-sandbox')
         options.add_argument('--window-size=2560,1440')
         if status_headless == 'aktiv':
             options.headless = True
