@@ -43,6 +43,8 @@ def step_click(context, buttonname):
     assert button.is_displayed() is True, f'Button {buttonname} wird nicht angezeigt'
     assert button.is_enabled() is True, f'Button {buttonname} ist nicht aktiv'
     WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@value="' + buttonname + '"]'))).click()
+    print("Click erfolgt")
+    print("Seitentitel nach Click: ", context.driver.title)
 
 
 @then("Das System antwortet mit Status {status}")
