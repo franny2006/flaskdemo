@@ -29,7 +29,7 @@ def step_getUrl(context, url):
             i = i+1
         else:
             systemUp = True
-            i = 30
+            break
     assert systemUp is True, f'Seite konnte nicht geladen werden'
     context.driver.get(url)
 
