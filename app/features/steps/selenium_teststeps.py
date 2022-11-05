@@ -21,7 +21,7 @@ def step_getUrl(context, url):
     context.driver.get("http://38.242.131.123:5000/viewKunden")
     titelStartseite = context.driver.title
 
-    anzRetries = 10
+    anzRetries = 30
     i = 0
     while i < anzRetries:
         if "InterfaceError" in titelStartseite:
