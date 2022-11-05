@@ -1,5 +1,5 @@
-@fixture.browser.firefox.ui
-Feature: Kunde erfassen
+@fixture.browser.chrome.ui
+Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle
     Given Sachbearbeiter öffnet Webseite 'http://38.242.131.123:5000/addKunde'

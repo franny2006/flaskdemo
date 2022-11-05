@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.wait import WebDriverWait
+import time
 
 driver = webdriver.Chrome('./chromedriver.exe')
 
@@ -13,11 +14,15 @@ WebDriverWait(driver, timeout=3).until(lambda d: d.find_element(By.NAME,"angebot
 name = driver.find_element(By.NAME, "angebotKundeNameAuswahl")
 name.send_keys('Müller, Marianne')
 
+name = driver.find_element(By.NAME, "angebotKundeGeburtsdatum")
+name.send_keys('17.11.1968')
+
 name = driver.find_element(By.NAME, "angebotFuehrerschein")
 name.send_keys('17.11.1988')
 
 name = driver.find_element(By.NAME, "angebotHersteller")
-name.send_keys('BAYER.MOT.WERKE-BMW')
+name.send_keys('BMW')
+time.sleep(1)
 
 name = driver.find_element(By.NAME, "angebotHsn")
 name.send_keys('005')

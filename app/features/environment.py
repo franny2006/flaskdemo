@@ -6,6 +6,9 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from behave import fixture
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 def before_tag(context, tag):
     if tag == "fixture.browser.chrome.headless":
@@ -25,12 +28,13 @@ def open_browser(context, browsertyp, status_headless):
 
     if browsertyp == "chrome":
         options = Options()
-        options.add_argument('--window-size=1920,1080')
+        options.add_argument('--window-size=2560,1440')
         if status_headless == 'aktiv':
             options.headless = True
         else:
             options.headless = False
-        browser = webdriver.Chrome('./features/steps/webdriver/chromedriver.exe', options=options)
+        # browser = webdriver.Chrome('./features/steps/webdriver/chromedriver.exe', options=options)
+        browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
       #  browser = webdriver.Chrome('/usr/local/bin/chromedriver', options=options)
 
         context.browsertyp = "chrome"

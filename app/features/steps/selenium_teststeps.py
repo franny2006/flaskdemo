@@ -7,6 +7,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from behave import fixture
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 
@@ -63,3 +66,8 @@ def step_result(context, returncode):
         rcSystem = None
 
     assert rcKorrekt is True, f'Returncode SOLL = {returncode} - IST = {rcSystem}'
+
+
+@then("Die Übersichtsseite wird angezeigt")
+def step_result(context):
+    pass
