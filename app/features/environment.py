@@ -33,6 +33,7 @@ def open_browser(context, browsertyp, status_headless):
         options.add_argument('--window-size=2560,1440')
         if status_headless == 'aktiv':
             options.headless = True
+            options.add_argument('--headless')
         else:
             options.headless = False
         # browser = webdriver.Chrome('./features/steps/webdriver/chromedriver.exe', options=options)

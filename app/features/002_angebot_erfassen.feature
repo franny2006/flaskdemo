@@ -1,4 +1,4 @@
-@fixture.browser.chrome.ui
+@fixture.browser.chrome.headless
 Feature: Angebote erfassen
 
   Scenario Outline: Angebot erfassen Positivfälle

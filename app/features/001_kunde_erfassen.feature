@@ -1,4 +1,4 @@
-@fixture.browser.chrome.ui
+@fixture.browser.chrome.headless
 Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle
