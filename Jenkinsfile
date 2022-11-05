@@ -43,16 +43,18 @@ node {
     }
 
     stage('Integration Test') {
-        sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
-        dir('app'){
-            echo "Workdir=$WORKSPACE"
-            sh 'ls -l'
-            dir ('testreports') {
-                writeFile file:'dummy', text:''
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            sh 'cd /var/lib/jenkins/workspace/Flaskdemo/app'
+            dir('app'){
+                echo "Workdir=$WORKSPACE"
+                sh 'ls -l'
+                dir ('testreports') {
+                    writeFile file:'dummy', text:''
+                }
+                sh 'ls -l'
+                sh 'behave --tags=integration --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
+                // sh 'behave ./features/demo.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
             }
-            sh 'ls -l'
-            sh 'behave --tags=integration --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
-            // sh 'behave ./features/demo.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
         }
     }
 

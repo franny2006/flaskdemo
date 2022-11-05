@@ -30,6 +30,11 @@ def step_input(context, inhalt, feldname):
         inhalt = inhalt[6:10] + "-" + inhalt[3:5] + "-" + inhalt[0:2]
         print(inhalt)
     feld.send_keys(inhalt)
+    content = feld.get_attribute("value")
+    print("Content nach SendKeys: ", content)
+    if feldname != "kundeGeburtsdatum":
+        assert content == inhalt, f'Der übergebene Wert {inhalt} konnte nicht ins Feld {feldname} eingetragen werden. Enthaltener Wert nach Erfassung: ' + content
+
 
 @when("Sachbearbeiter klickt auf Button [{buttonname}]")
 def step_click(context, buttonname):
@@ -54,6 +59,7 @@ def step_result(context, status):
         detail = "Tag nicht gefunden"
 
     assert statusKorrekt is True, f'Der erwartete Status = {status} wurde nicht gefunden. Detail: ' + detail
+
 
 
 @then("Das System antwortet mit Returncode {returncode}")
