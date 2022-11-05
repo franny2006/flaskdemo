@@ -32,13 +32,17 @@ def step_input(context, inhalt, feldname):
     feld.send_keys(inhalt)
     content = feld.get_attribute("value")
     print("Feldinhalt nach SendKeys: ", content)
-    if feldname != "kundeGeburtsdatum":
+    if feldname not in ("kundeGeburtsdatum", "angebotKundeGeburtsdatum", "angebotFuehrerschein", "angebotVersicherungsbeginn", "angebotErstzulassung"):
         assert content == inhalt, f'Der übergebene Wert {inhalt} konnte nicht ins Feld {feldname} eingetragen werden. Enthaltener Wert nach Erfassung: ' + content
 
 
 @when("Sachbearbeiter klickt auf Button [{buttonname}]")
 def step_click(context, buttonname):
-    context.driver.find_element(By.XPATH, '//*[@value="' + buttonname + '"]').click()
+    button = context.driver.find_element(By.XPATH, '//*[@value="' + buttonname + '"]')
+
+    assert button.is_displayed() is True, f'Button {buttonname} wird nicht angezeigt'
+    assert button.is_enabled() is True, f'Button {buttonname} ist nicht aktiv'
+    WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@value="' + buttonname + '"]'))).click()
 
 
 @then("Das System antwortet mit Status {status}")
