@@ -31,7 +31,7 @@ def step_input(context, inhalt, feldname):
         print(inhalt)
     feld.send_keys(inhalt)
     content = feld.get_attribute("value")
-    print("Content nach SendKeys: ", content)
+    print("Feldinhalt nach SendKeys: ", content)
     if feldname != "kundeGeburtsdatum":
         assert content == inhalt, f'Der übergebene Wert {inhalt} konnte nicht ins Feld {feldname} eingetragen werden. Enthaltener Wert nach Erfassung: ' + content
 
@@ -46,6 +46,12 @@ def step_result(context, status):
     statusKorrekt = False
     detail = ""
 
+    # Returncode ermitteln (falls vorhanden
+    try:
+        rcSystem = "Returncode: " + context.driver.find_element(By.XPATH, "/html/body/ul/li[2]").text
+    except:
+        rcSystem = "kein Returncode-Tag"
+
     try:
         statusSystem = context.driver.find_element(By.XPATH, "/html/body/ul/li[1]").text
         if status in statusSystem:
@@ -56,9 +62,10 @@ def step_result(context, status):
             detail = "Tag gefunden, jedoch andere Rückmeldung (" + statusSystem + ")"
     except:
         statusSystem = None
-        detail = "Tag nicht gefunden"
+        detail = "Statuscode-Tag nicht gefunden"
 
-    assert statusKorrekt is True, f'Der erwartete Status = {status} wurde nicht gefunden. Detail: ' + detail
+
+    assert statusKorrekt is True, f'Der erwartete Status = {status} wurde nicht gefunden. Detail: ' + detail + rcSystem
 
 
 
