@@ -2,7 +2,7 @@
 Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle
-    Given Sachbearbeiter öffnet Webseite 'http://localhost:5000/addKunde'
+    Given Sachbearbeiter öffnet Webseite 'http://38.242.131.123:5000/addKunde'
     When Sachbearbeiter wählt <Rolle> in Feld *kundeRolle*
     When Sachbearbeiter wählt <Anrede> in Feld *kundeAnrede*
     When Sachbearbeiter schreibt <Name> in Feld *kundeName*
@@ -22,7 +22,7 @@ Feature: Kunden erfassen
 
 
   Scenario Outline: Kunde erfassen Negativfälle
-    Given Sachbearbeiter öffnet Webseite 'http://localhost:5000/addKunde'
+    Given Sachbearbeiter öffnet Webseite 'http://38.242.131.123:5000/addKunde'
     When Sachbearbeiter wählt <Rolle> in Feld *kundeRolle*
     When Sachbearbeiter wählt <Anrede> in Feld *kundeAnrede*
     When Sachbearbeiter schreibt <Name> in Feld *kundeName*

@@ -39,17 +39,21 @@ def step_click(context, buttonname):
 @then("Das System antwortet mit Status {status}")
 def step_result(context, status):
     statusKorrekt = False
+    detail = ""
 
     try:
         statusSystem = context.driver.find_element(By.XPATH, "/html/body/ul/li[1]").text
         if status in statusSystem:
             statusKorrekt = True
+            detail = "Erwarteter Status gefunden"
         else:
             statusKorrekt = False
+            detail = "Tag gefunden, jedoch andere Rückmeldung (" + statusSystem + ")"
     except:
         statusSystem = None
+        detail = "Tag nicht gefunden"
 
-    assert statusKorrekt is True, f'Der erwartete Status = {status} wurde nicht gefunden.'
+    assert statusKorrekt is True, f'Der erwartete Status = {status} wurde nicht gefunden. Detail: ' + detail
 
 
 @then("Das System antwortet mit Returncode {returncode}")
