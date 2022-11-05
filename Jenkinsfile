@@ -51,7 +51,7 @@ node {
                 writeFile file:'dummy', text:''
             }
             sh 'ls -l'
-            sh 'behave ./features/001_kunde_erfassen.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
+            sh 'behave --tags=integration --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
             // sh 'behave ./features/demo.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
         }
     }

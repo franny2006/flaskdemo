@@ -1,8 +1,8 @@
-@fixture.browser.chrome.headless
+@fixture.browser.chrome.headless @integration
 Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle
-    Given Sachbearbeiter öffnet Webseite 'http://google.de'
+    Given Sachbearbeiter öffnet Webseite 'http://localhost:5000/addKunde'
     When Sachbearbeiter wählt <Rolle> in Feld *kundeRolle*
     When Sachbearbeiter wählt <Anrede> in Feld *kundeAnrede*
     When Sachbearbeiter schreibt <Name> in Feld *kundeName*
