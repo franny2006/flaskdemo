@@ -10,6 +10,7 @@ node {
     stage('Build image') {
         try {
             sh 'docker-compose down -v'
+            // sh 'docker rm $(docker ps -a -q)'
             }
         catch (Exception e) {
             echo 'Container stoppen nicht möglich:  ' + e.toString()
