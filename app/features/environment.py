@@ -31,6 +31,7 @@ def open_browser(context, browsertyp, status_headless):
     #    options.binary_location = "/usr/local/bin/chromedriver"
         options.add_argument('--no-sandbox')
         options.add_argument('--window-size=2560,1440')
+        options.add_argument('--disable-dev-shm-usage')
         if status_headless == 'aktiv':
             options.headless = True
             options.add_argument('--headless')
