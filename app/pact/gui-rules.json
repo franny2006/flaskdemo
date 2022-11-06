@@ -1,0 +1,48 @@
+{
+  "consumer": {
+    "name": "GUI"
+  },
+  "provider": {
+    "name": "Rules"
+  },
+  "interactions": [
+    {
+      "description": "Erzeugen eines Response mit positivem Prüfergebnis",
+      "providerState": "Request an Regelengine mit gültigem Auftrag zur Kundenanlage",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/resources/verifyKunde",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "kunde_id": "",
+          "rolle": "2",
+          "anrede": "1",
+          "name": "CT_1_Name",
+          "vorname": "CT_1_Vorname",
+          "strasse": "CT_1_Strasse",
+          "plz": "CT_1_Plz",
+          "ort": "CT_1_Ort",
+          "geburtsdatum": "CT_1_Geburtsdatum"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "status": {
+            "result": "ok",
+            "rc": "Prüfungen erfolgreich"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
