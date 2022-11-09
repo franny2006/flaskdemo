@@ -3,7 +3,8 @@ sys.path.insert(0, '../../')
 sys.path.insert(1, '../')
 sys.path.insert(1, '/')
 
-from pact import Consumer, Provider
+from pact import Consumer, Provider, Like
+from parameterized import parameterized
 import atexit
 import unittest
 import requests
@@ -11,7 +12,15 @@ import sys
 import os
 import json
 
-pact = Consumer('GUI').has_pact_with(Provider('Rules'), host_name='Mockservice Rules', port=1234)
+
+#PACT_MOCK_HOST = 'localhost'
+#PACT_MOCK_PORT = 5053
+
+PACT_MOCK_HOST = 'localhost'
+#PACT_MOCK_HOST = 'localhost'
+PACT_MOCK_PORT = '5080'
+
+pact = Consumer('GUI').has_pact_with(Provider('Rules'), host_name=PACT_MOCK_HOST, port=PACT_MOCK_PORT)
 pact.start_service()
 atexit.register(pact.stop_service)
 
@@ -24,40 +33,43 @@ PACT_FILE = os.path.join(PACT_DIR, 'archiv/pact.json')
 # Defining Class
 class verifyKunden(unittest.TestCase):
 
-    def test_kunde_anlegen(self):
+    @parameterized.expand([
+        ['2', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'ok', 'Prüfungen erfolgreich'],
+        ['x', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'nok', 'Ungültiger Wert in Feld \'Rolle\''],
+        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '1999-01-17', 'nok', 'PLZ nicht numerisch']
+    ])
+    def test_kunde_anlegen(self, rolle, anrede, name, vorname, strasse, plz, ort, geburtsdatum, status, rc):
         # Platzhalter für Methodenaufruf zur Erzeugung des Payloads
         payload = {
-            'kunde_id': '',
-            'rolle': '2',
-            'anrede': '1',
-            'name': 'CT_1_Name',
-            'vorname': 'CT_1_Vorname',
-            'strasse': 'CT_1_Strasse',
-            'plz': 'CT_1_Plz',
-            'ort': 'CT_1_Ort',
-            'geburtsdatum': '01-01-2010'
-        }
-   #     payload = json.loads(payload)
+         'kunde_id': '',
+         'rolle': rolle,
+         'anrede': anrede,
+         'name': name,
+         'vorname': vorname,
+         'strasse': strasse,
+         'plz': plz,
+         'ort': ort,
+         'geburtsdatum': geburtsdatum}
+
 
 
         expected = {
-                "status": { 'result': 'ok',
-                            'rc': 'Prüfungen erfolgreich'}
-             }
+            "status": { 'result': status,
+                        'rc': rc}
+        }
 
         # Consumer Request und erwarteter Response
         (pact
-         .given('Request an Regelengine mit gültigem Auftrag zur Kundenanlage')
-         .upon_receiving('Erzeugen eines Response mit positivem Prüfergebnis')
-         .with_request(method = 'POST',
+            .given('Testfall für ' + rc)
+            .upon_receiving('Erzeugen eines Response mit positivem Prüfergebnis')
+            .with_request(method = 'POST',
                        path = '/api/v1/resources/verifyKunde',
                        body = payload,
                        headers = {"Content-Type": "application/json"})
-         .will_respond_with(200, body=expected))
+            .will_respond_with(200, body=expected))
 
 
         headers = {"Content-Type": "application/json"}
-
 
 
         with pact:

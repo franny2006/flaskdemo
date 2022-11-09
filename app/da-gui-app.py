@@ -75,6 +75,7 @@ def addKunde():
     # Verarbeitung, wenn Formular validiert werden kann
     if form.validate_on_submit():
         payload = {
+            'kunde_id': form.kunde_id.data,
             'rolle': form.kundeRolle.data,
             'anrede': form.kundeAnrede.data,
             'name': form.kundeName.data,
@@ -98,7 +99,6 @@ def addKunde():
             form.kundeVorname.data, form.kundeName.data))
         dict_status = r.json()
 
-        print("Status Aufruf: ", dict_status)
         if 'nok' in dict_status['status']['result']:
             flash('Fehler bei {} {}: {}'.format(form.kundeVorname.data, form.kundeName.data, dict_status['status']))
         else:
