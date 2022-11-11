@@ -44,7 +44,6 @@ node {
         catch {
             echo 'docker rm nicht erfolgreich'
         }
-        sleep(time:45,unit:"SECONDS")
         sh 'docker-compose build'
     }
 
