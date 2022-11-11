@@ -12,6 +12,7 @@ node {
             /* Stoppen der Container aus KIT Frontend */
             sh 'cd var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
             sh 'docker-compose down -v'
+            }
         catch (Exception e) {
             echo 'Container KIT Frontend stoppen nicht möglich:  ' + e.toString()
             }
@@ -19,6 +20,7 @@ node {
             /* Stoppen der Container aus KIT Backend */
             sh 'cd var/lib/jenkins/workspace/Demoanwendung_Backend_KIT'
             sh 'docker-compose down -v'
+            }
         catch (Exception e) {
             echo 'Container KIT Backend stoppen nicht möglich:  ' + e.toString()
             }
