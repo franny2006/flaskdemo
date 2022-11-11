@@ -41,8 +41,8 @@ node {
             sh 'docker rm $(docker ps -a -q)'
             echo 'Gestoppte Container erfolgreich entfernt'
             }
-        catch {
-            echo 'docker rm nicht erfolgreich'
+        catch (Exception e) {
+            echo 'docker rm nicht erfolgreich' + e.toString()
         }
         sh 'docker-compose build'
     }
