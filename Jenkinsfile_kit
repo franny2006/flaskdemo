@@ -26,7 +26,7 @@ node {
                 writeFile file:'dummy', text:''
             }
             sh 'ls -l'
-            sh 'behave ./features/demo.feature --tags komponentenintegrationstest --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
+            sh 'behave --tags komponentenintegrationstest --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
             // sh 'behave ./features/demo.feature --junit --junit-directory /var/lib/jenkins/workspace/Flaskdemo/app/testreports'
         }
     }
