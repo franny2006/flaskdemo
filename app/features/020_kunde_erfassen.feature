@@ -1,4 +1,4 @@
-@fixture.browser.chrome.headless @integration
+@fixture.browser.chrome.headless @systemtest  @systemintegrationstest
 Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle

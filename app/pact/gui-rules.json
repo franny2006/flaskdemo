@@ -8,7 +8,7 @@
   "interactions": [
     {
       "description": "Erzeugen eines Response mit positivem Prüfergebnis",
-      "providerState": "Request an Regelengine mit gültigem Auftrag zur Kundenanlage",
+      "providerState": "Testfall für Prüfungen erfolgreich",
       "request": {
         "method": "POST",
         "path": "/api/v1/resources/verifyKunde",
@@ -19,12 +19,12 @@
           "kunde_id": "",
           "rolle": "2",
           "anrede": "1",
-          "name": "CT_1_Name",
-          "vorname": "CT_1_Vorname",
-          "strasse": "CT_1_Strasse",
-          "plz": "CT_1_Plz",
-          "ort": "CT_1_Ort",
-          "geburtsdatum": "CT_1_Geburtsdatum"
+          "name": "Name",
+          "vorname": "Vorname",
+          "strasse": "Strasse",
+          "plz": "12345",
+          "ort": "Ort",
+          "geburtsdatum": "1999-01-17"
         }
       },
       "response": {
@@ -35,6 +35,105 @@
           "status": {
             "result": "ok",
             "rc": "Prüfungen erfolgreich"
+          }
+        }
+      }
+    },
+    {
+      "description": "Erzeugen eines Response mit positivem Prüfergebnis",
+      "providerState": "Testfall für Ungültiger Wert in Feld 'Rolle'",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/resources/verifyKunde",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "kunde_id": "",
+          "rolle": "x",
+          "anrede": "1",
+          "name": "Name",
+          "vorname": "Vorname",
+          "strasse": "Strasse",
+          "plz": "12345",
+          "ort": "Ort",
+          "geburtsdatum": "1999-01-17"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "status": {
+            "result": "nok",
+            "rc": "Ungültiger Wert in Feld 'Rolle'"
+          }
+        }
+      }
+    },
+    {
+      "description": "Erzeugen eines Response mit positivem Prüfergebnis",
+      "providerState": "Testfall für PLZ nicht numerisch",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/resources/verifyKunde",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "kunde_id": "",
+          "rolle": "2",
+          "anrede": "1",
+          "name": "Name",
+          "vorname": "Vorname",
+          "strasse": "Strasse",
+          "plz": "xxxxx",
+          "ort": "Ort",
+          "geburtsdatum": "1999-01-17"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "status": {
+            "result": "nok",
+            "rc": "PLZ nicht numerisch"
+          }
+        }
+      }
+    },
+    {
+      "description": "Erzeugen eines Response mit positivem Prüfergebnis",
+      "providerState": "Testfall für Alter falsch",
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/resources/verifyKunde",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "kunde_id": "",
+          "rolle": "2",
+          "anrede": "1",
+          "name": "Name",
+          "vorname": "Vorname",
+          "strasse": "Strasse",
+          "plz": "xxxxx",
+          "ort": "Ort",
+          "geburtsdatum": "2009-01-17"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "status": {
+            "result": "nok",
+            "rc": "Alter falsch"
           }
         }
       }

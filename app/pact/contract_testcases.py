@@ -36,7 +36,8 @@ class verifyKunden(unittest.TestCase):
     @parameterized.expand([
         ['2', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'ok', 'Prüfungen erfolgreich'],
         ['x', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'nok', 'Ungültiger Wert in Feld \'Rolle\''],
-        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '1999-01-17', 'nok', 'PLZ nicht numerisch']
+        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '1999-01-17', 'nok', 'PLZ nicht numerisch'],
+        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '2009-01-17', 'nok', 'Alter falsch']
     ])
     def test_kunde_anlegen(self, rolle, anrede, name, vorname, strasse, plz, ort, geburtsdatum, status, rc):
         # Platzhalter für Methodenaufruf zur Erzeugung des Payloads
@@ -61,7 +62,7 @@ class verifyKunden(unittest.TestCase):
         # Consumer Request und erwarteter Response
         (pact
             .given('Testfall für ' + rc)
-            .upon_receiving('Erzeugen eines Response mit positivem Prüfergebnis')
+            .upon_receiving('Erzeugen eines Response mit Rueckmeldung: ', rc)
             .with_request(method = 'POST',
                        path = '/api/v1/resources/verifyKunde',
                        body = payload,
