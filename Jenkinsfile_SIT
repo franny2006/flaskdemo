@@ -60,13 +60,13 @@ node {
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/db/init.sql'
     }
 
-    stage('Starten des Backend') {
+    stage('Build & Deploy des Backend') {
         build job: 'Demoanwendung_Backend'
     }
 
 
     stage('Ausfuehrung der SIT') {
-        sleep(time:45,unit:"SECONDS")
+        sleep(time:15,unit:"SECONDS")
         sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
@@ -89,7 +89,7 @@ node {
         catch (Exception e) {
             echo 'Konvertierung hat nicht funktioniert' + e.toString()
         }
-        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/Demoanwendung_Frontend_SIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
+        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '/var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
    }
 
 }
