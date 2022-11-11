@@ -60,8 +60,8 @@ node {
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/db/init.sql'
     }
 
-    stage('Ausfuehrung der Pipeline fuer Backend') {
-        build 'Demoanwendung_Backend'
+    stage('Starten des Backend') {
+        build job: 'Demoanwendung_Backend'
     }
 
 
