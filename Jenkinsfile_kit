@@ -33,6 +33,7 @@ node {
     }
 
     stage('Ausfuehrung der KIT') {
+        sleep(time:45,unit:"SECONDS")
         sh 'cd /var/lib/jenkins/workspace/Demoanwendung Frontend - KIT-Pipeline/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
