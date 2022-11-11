@@ -86,7 +86,7 @@ def step_Geburtsdatum(context, geburtsdatum):
 @then('der Kunde wurde erfolgreich in der Datenbank gespeichert')
 def step_Response(context):
 
-    url = 'http://localhost:5005/api/v1.0/addKunde'
+    url = 'http://127.0.0.1:5005/api/v1.0/addKunde'
     payload = {
         'rolle': '' + context.rolle + '',
         'anrede': '' + context.anrede + '',
