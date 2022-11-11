@@ -37,6 +37,13 @@ node {
         catch (Exception e) {
             echo 'Container SIT Frontend stoppen nicht möglich:  ' + e.toString()
             }
+        try {
+            sh 'docker rm $(docker ps -a -q)
+            echo 'Gestoppte Container erfolgreich entfernt'
+            }
+        catch {
+            echo 'docker rm nicht erfolgreich'
+        }
         sleep(time:45,unit:"SECONDS")
         sh 'docker-compose build'
     }
