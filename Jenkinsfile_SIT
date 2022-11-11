@@ -1,0 +1,78 @@
+node {
+    def app
+
+    stage('Clone des Github-Repository Frontend') {
+        /* Let's make sure we have the repository cloned to our workspace */
+
+        checkout scm
+    }
+
+    stage('Build Image') {
+        try {
+            /* Stoppen der Container aus KIT Frontend */
+            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
+            sh 'docker-compose down -v'
+        catch (Exception e) {
+            echo 'Container KIT Frontend stoppen nicht möglich:  ' + e.toString()
+            }
+        try {
+            /* Stoppen der Container aus KIT Backend */
+            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Backend_KIT'
+            sh 'docker-compose down -v'
+        catch (Exception e) {
+            echo 'Container KIT Backend stoppen nicht möglich:  ' + e.toString()
+            }
+        try {
+            /* Stoppen der Container aus SIT Frontend */
+            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT'
+            sh 'docker-compose down -v'
+            }
+        catch (Exception e) {
+            echo 'Container SIT Frontend stoppen nicht möglich:  ' + e.toString()
+            }
+        sh 'docker-compose build'
+    }
+
+    stage('Start der Container') {
+        sh 'docker-compose up -d --remove-orphans'
+      //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/db/init.sql'
+    }
+
+    stage('Container-Netzwerk aufbauen') {
+        sh 'docker network prune'
+        sh 'docker network connect demoNetz da_gui'
+        sh 'docker network connect demoNetz da_persistierung'
+        sh 'docker network connect demoNetz da_mysql'
+      //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/db/init.sql'
+    }
+
+    stage('Ausfuehrung der Pipeline fuer Backend') {
+        steps {
+            build job: 'Demoanwendung_Backend', parameters: [
+            string(name: 'param1', value: "value1")
+            ]
+        }
+    }
+
+
+    stage('Ausfuehrung der SIT') {
+        sleep(time:45,unit:"SECONDS")
+        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app'
+        dir('app'){
+            echo "Workdir=$WORKSPACE"
+            sh 'ls -l'
+            dir ('testreports') {
+                writeFile file:'dummy', text:''
+            }
+            sh 'ls -l'
+            sh 'behave --tags systemintegrationstest --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports'
+        }
+    }
+
+
+   stage('Import Testergebnisse nach Xray') {
+        junit '**/testreports/*.xml'
+        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/Demoanwendung_Frontend_SIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
+   }
+
+}

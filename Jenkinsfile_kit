@@ -49,7 +49,7 @@ node {
 
    stage('Import Testergebnisse nach Xray') {
         junit '**/testreports/*.xml'
-        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/Demoanwendung Frontend - KIT-Pipeline/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
+        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/Demoanwendung_Frontend_KIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
    }
 
 }
