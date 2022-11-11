@@ -9,7 +9,7 @@ node {
 
     stage('Build Image') {
         try {
-            sh 'cd \'var/lib/jenkins/workspace/Demoanwendung Frontend - KIT-Pipeline\''
+            sh 'cd "var/lib/jenkins/workspace/Demoanwendung Frontend - KIT-Pipeline"'
             sh 'docker-compose down -v'
             // sh 'docker rm $(docker ps -a -q)'
             }
