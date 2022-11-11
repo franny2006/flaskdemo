@@ -38,7 +38,7 @@ node {
             echo 'Container SIT Frontend stoppen nicht möglich:  ' + e.toString()
             }
         try {
-            sh 'docker rm $(docker ps -a -q)
+            sh 'docker rm $(docker ps -a -q)'
             echo 'Gestoppte Container erfolgreich entfernt'
             }
         catch {
