@@ -7,10 +7,10 @@ node {
         checkout scm
     }
 
-    stage('Build Image') {
+    stage('Stoppen aller laufenden Container und Build Image') {
         try {
             /* Stoppen der Container aus KIT Frontend */
-            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
+            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
             sh 'docker-compose down -v'
             echo 'Container KIT Frontend gestoppt'
             }
@@ -19,7 +19,7 @@ node {
             }
         try {
             /* Stoppen der Container aus Backend */
-            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Backend'
+            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Backend'
             sh 'docker-compose down -v'
             echo 'Container Backend gestoppt'
             }
@@ -28,7 +28,7 @@ node {
             }
         try {
             /* Stoppen der Container aus SIT Frontend */
-            sh 'cd var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT'
+            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT'
             sh 'docker-compose down -v'
             echo 'Container SIT Frontend gestoppt'
             }
