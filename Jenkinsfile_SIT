@@ -71,7 +71,14 @@ node {
 
 
    stage('Import Testergebnisse nach Xray') {
-        junit '**/testreports/*.xml'
+        echo "Behave-Reports in JUNIT-Format konvertieren..."
+        try {
+            junit '/var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports/*.xml'
+            echo 'Behave-Reports in JUNIT-Format konvertiert!'
+            }
+        catch (Exception e) {
+            echo 'Konvertierung hat nicht funktioniert' + e.toString()
+        }
         step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/Demoanwendung_Frontend_SIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
    }
 
