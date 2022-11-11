@@ -61,11 +61,7 @@ node {
     }
 
     stage('Ausfuehrung der Pipeline fuer Backend') {
-        steps {
-            build job: 'Demoanwendung_Backend', parameters: [
-            string(name: 'param1', value: "value1")
-            ]
-        }
+        build '../Demoanwendung_Backend'
     }
 
 
