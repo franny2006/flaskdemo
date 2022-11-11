@@ -61,7 +61,7 @@ node {
     }
 
     stage('Ausfuehrung der Pipeline fuer Backend') {
-        build '../Demoanwendung_Backend'
+        build 'Demoanwendung_Backend'
     }
 
 
