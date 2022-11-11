@@ -10,8 +10,11 @@ node {
     stage('Stoppen aller laufenden Container und Build Image') {
         try {
             /* Stoppen der Container aus KIT Frontend */
-            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
-            sh 'docker-compose down -v'
+            sh 'docker stop da_gui'
+            sh 'docker stop da_persistierung'
+            sh 'docker stop da_persistierung'
+            sh 'docker stop da_mysql'
+            sh 'docker stop da_phpmyadmin'
             echo 'Container KIT Frontend gestoppt'
             }
         catch (Exception e) {
@@ -19,8 +22,7 @@ node {
             }
         try {
             /* Stoppen der Container aus Backend */
-            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Backend'
-            sh 'docker-compose down -v'
+            sh 'docker stop da_backend'
             echo 'Container Backend gestoppt'
             }
         catch (Exception e) {
