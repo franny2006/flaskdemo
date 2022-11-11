@@ -1,13 +1,13 @@
 node {
     def app
 
-    stage('Clone repository') {
+    stage('Clone des Github-Repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
         checkout scm
     }
 
-    stage('Build image') {
+    stage('Build Image und Ausführung der KIT') {
         try {
             sh 'docker-compose down -v'
             // sh 'docker rm $(docker ps -a -q)'
@@ -30,12 +30,12 @@ node {
         }
     }
 
-    stage('Start Containers') {
+    stage('Start der Container') {
         sh 'docker-compose up -d --remove-orphans'
       //  sh 'docker exec -i flaskdemo_db_1 mysql -h db -uroot -p"root" < /var/lib/jenkins/workspace/Flaskdemo/db/init.sql'
     }
 
-    stage('Create Network Connectivity') {
+    stage('Container-Netzwerk aufbauen') {
         sh 'docker network prune'
         sh 'docker network connect demoNetz da_gui'
         sh 'docker network connect demoNetz da_persistierung'
@@ -44,7 +44,7 @@ node {
     }
 
 
-   stage('Import results to Xray') {
+   stage('Import Testergebnisse nach Xray') {
         junit '**/testreports/*.xml'
         step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
    }
