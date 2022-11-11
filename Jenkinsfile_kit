@@ -9,6 +9,7 @@ node {
 
     stage('Build Image und Ausführung der KIT') {
         try {
+            sh 'cd /var/lib/jenkins/workspace/Flaskdemo'
             sh 'docker-compose down -v'
             // sh 'docker rm $(docker ps -a -q)'
             }
