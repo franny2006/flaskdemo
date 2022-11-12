@@ -55,7 +55,12 @@ node {
         sh 'docker network connect demoNetz da_gui'
         sh 'docker network connect demoNetz da_persistierung'
         sh 'docker network connect demoNetz da_mysql'
+        try {
         sh 'docker network connect demoNetz pact-stub'
+        }
+        catch (Exception e) {
+        echo 'Pact-Stub bereits in Netzwerk enthalten'
+        }
     }
 
     stage('Build & Deploy des Backend') {
