@@ -34,12 +34,14 @@ PACT_FILE = os.path.join(PACT_DIR, 'archiv/pact.json')
 class verifyKunden(unittest.TestCase):
 
     @parameterized.expand([
-        ['2', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'ok', 'Prüfungen erfolgreich'],
-        ['x', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'nok', 'Ungültiger Wert in Feld \'Rolle\''],
-        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '1999-01-17', 'nok', 'PLZ nicht numerisch'],
-        ['2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '2009-01-17', 'nok', 'Alter falsch']
+        ['Glattlaeufer', '2', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'ok', 'Prüfungen erfolgreich'],
+        ['Ungueltige Rolle', 'x', '1', 'Name', 'Vorname', 'Strasse', '12345', 'Ort', '1999-01-17', 'nok', 'Ungültiger Wert in Feld \'Rolle\''],
+        ['PLZ nicht numerisch', '2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '1999-01-17', 'nok', 'PLZ nicht numerisch'],
+        ['Juenger als 18 Jahre', '2', '1', 'Name', 'Vorname', 'Strasse', 'xxxxx', 'Ort', '2009-01-17', 'nok', 'jünger als 18 Jahre'],
+        ['PLZ nicht numerisch 2', '2', '1', 'CT_Name', 'CT_Vorname', 'CT_Strasse', 'CT_Plz', 'CT_Ort', '2002-01-17', 'nok', 'PLZ nicht numerisch'],
+        ['Glattlaeufer 2', '1', '1', 'CT_Name', 'CT_Vorname', 'CT_Strasse', '12345', 'CT_Ort', '2002-01-17', 'ok', 'Prüfungen erfolgreich']
     ])
-    def test_kunde_anlegen(self, rolle, anrede, name, vorname, strasse, plz, ort, geburtsdatum, status, rc):
+    def test_kunde_anlegen(self, testfall, rolle, anrede, name, vorname, strasse, plz, ort, geburtsdatum, status, rc):
         # Platzhalter für Methodenaufruf zur Erzeugung des Payloads
         payload = {
          'kunde_id': '',
@@ -61,8 +63,8 @@ class verifyKunden(unittest.TestCase):
 
         # Consumer Request und erwarteter Response
         (pact
-            .given('Testfall für ' + rc)
-            .upon_receiving('Erzeugen eines Response mit Rueckmeldung: ', rc)
+            .given('Testfall: ' + testfall)
+            .upon_receiving('Erzeugen eines validen Response mit Rueckmeldung ' + status)
             .with_request(method = 'POST',
                        path = '/api/v1/resources/verifyKunde',
                        body = payload,

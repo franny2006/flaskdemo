@@ -67,6 +67,10 @@ node {
         build job: 'Demoanwendung_Backend'
     }
 
+    stage('Verifizieren der Contacts gegen Provider') {
+        sh 'pact-provider-verifier --pact-broker-base-url=http://38.242.131.123:9292  --provider-base-url=http://38.242.131.123:5010 --provider=Rules --publish-verification-results --provider-app-version=1.0.3'
+    }
+
 
 
 
