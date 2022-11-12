@@ -37,7 +37,9 @@ node {
     }
 
     stage('Konfiguration Mock-Routing') {
-        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST'
+        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app'
+        sh 'mv config.ini config_Original.ini'
+        sh 'mv config_Pact.ini config.ini'
     }
 
     stage('Build Frontend') {
@@ -63,31 +65,6 @@ node {
 
 
 
-    stage('Ausfuehrung der SIT') {
-        sleep(time:15,unit:"SECONDS")
-        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app'
-        dir('app'){
-            echo "Workdir=$WORKSPACE"
-            sh 'ls -l'
-            dir ('testreports') {
-                writeFile file:'dummy', text:''
-            }
-            sh 'ls -l'
-            sh 'behave --tags systemintegrationstest --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports'
-        }
-    }
 
-
-   stage('Import Testergebnisse nach Xray') {
-        echo "Behave-Reports in JUNIT-Format konvertieren..."
-        try {
-            junit '/var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports/*.xml'
-            echo 'Behave-Reports in JUNIT-Format konvertiert!'
-            }
-        catch (Exception e) {
-            echo 'Konvertierung hat nicht funktioniert' + e.toString()
-        }
-        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '/var/lib/jenkins/workspace/Demoanwendung_Frontend_SIT/app/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
-   }
 
 }
