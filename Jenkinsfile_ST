@@ -37,9 +37,8 @@ node {
     }
 
     stage('Konfiguration Mock-Routing') {
-        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config'
-        sh 'mv /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/config.ini /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/onfig_Original.ini'
-        sh 'mv config_Pact.ini config.ini'
+        sh 'mv /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/config.ini /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/config_Original.ini'
+        sh 'mv /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/config_Pact.ini /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/config/config.ini'
     }
 
     stage('Build Frontend') {
