@@ -7,15 +7,36 @@ node {
         checkout scm
     }
 
-    stage('Build Image') {
+    stage('Stoppen aller laufenden Container') {
         try {
-            sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_KIT'
-            sh 'docker-compose down -v'
-            // sh 'docker rm $(docker ps -a -q)'
+            /* Stoppen der Container aus Frontend */
+            sh 'docker stop da_gui'
+            sh 'docker stop da_persistierung'
+            sh 'docker stop da_mysql'
+            sh 'docker stop da_phpmyadmin'
+            echo 'Container KIT Frontend gestoppt'
             }
         catch (Exception e) {
-            echo 'Container stoppen nicht möglich:  ' + e.toString()
+            echo 'Container Frontend stoppen nicht möglich:  ' + e.toString()
             }
+        try {
+            /* Stoppen der Container aus Backend */
+            sh 'docker stop da_backend'
+            echo 'Container Backend gestoppt'
+            }
+        catch (Exception e) {
+            echo 'Container Backend stoppen nicht möglich:  ' + e.toString()
+            }
+        try {
+            sh 'docker rm $(docker ps -a -q)'
+            echo 'Gestoppte Container erfolgreich entfernt'
+            }
+        catch (Exception e) {
+            echo 'docker rm nicht erfolgreich' + e.toString()
+        }
+    }
+
+    stage('Build Image Frontend') {
         sh 'docker-compose build'
     }
 
