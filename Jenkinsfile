@@ -60,9 +60,10 @@ node {
     }
 
 
-   stage('Import results to Xray') {
+   stage('Transfer Testresults to Zephyr') {
         junit '**/testreports/*.xml'
-        step([$class: 'XrayImportBuilder', endpointName: '/junit', importFilePath: '**/testreports/*.xml', importToSameExecution: 'true', projectKey: 'DEP', serverInstance: '8cad2d10-c6a7-43ca-8dc5-9bdbd7ae8eec'])
-   }
+        sh 'zip -D /var/lib/jenkins/workspace/Flaskdemo/app/testreports/junit_tests.zip /var/lib/jenkins/workspace/Flaskdemo/app/testreports/TEST*.xml'
+        sh 'curl -o -X POST -F "file=@/var/lib/jenkins/workspace/Flaskdemo/app/testreports/junit_tests.zip" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijp7ImJhc2VVcmwiOiJodHRwczovL3Rlc3RtYW51ZmFrdHVyLmF0bGFzc2lhbi5uZXQiLCJ1c2VyIjp7ImFjY291bnRJZCI6IjVhZGIwNTAxZWVlODdmMmUzMTUxMTU3MSJ9fSwiaXNzIjoiY29tLmthbm9haC50ZXN0LW1hbmFnZXIiLCJzdWIiOiIwZTU0ZTg0ZS0yOTRlLTM2NDItYmMzMC0wY2JkN2Y1ZmJjYzEiLCJleHAiOjE3MjYyMjE1MTUsImlhdCI6MTY5NDY4NTUxNX0.i-Pv3fXtrnE1nFy_kARZu8OgccCPLyF8SbtzqQHUvVM" "https://api.zephyrscale.smartbear.com/v2/automations/executions/junit?projectKey=DA&autoCreateTestCases=true"'
+    }
 
 }

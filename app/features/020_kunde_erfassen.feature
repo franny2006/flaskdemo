@@ -1,4 +1,4 @@
-@fixture.browser.chrome.headless @systemtest  @systemintegrationstest
+@fixture.browser.chrome.ui @systemtest  @systemintegrationstest
 Feature: Kunden erfassen
 
   Scenario Outline: Kunde erfassen Positivfälle
@@ -22,7 +22,7 @@ Feature: Kunden erfassen
     | Sonstiges               | Divers        | Huber           | Ditto         | Marienplatz 1   | 81369 | München     | 31.03.1984    | Daten gespeichert für Kunde Ditto Huber     | Index - Demoanwendung |
 
 
-  Scenario Outline: Kunde erfassen Negativfälle
+  Scenario Outline: Kunde erfassen Negativfälle: <Rc>
     Given Sachbearbeiter öffnet Webseite 'http://38.242.131.123:5000/addKunde'
     When Sachbearbeiter wählt <Rolle> in Feld *kundeRolle*
     When Sachbearbeiter wählt <Anrede> in Feld *kundeAnrede*
