@@ -12,6 +12,6 @@ Werkzeug==2.0.3
 behave==1.2.6
 requests==2.27.1
 urllib3==1.26.12
-selenium==4.0.0a7
-
+selenium==4.12
+webdriver-manager==4.0.0
 
