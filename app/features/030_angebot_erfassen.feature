@@ -1,4 +1,4 @@
-@fixture.browser.chrome.ui @systemtest @systemintegrationstest
+@fixture.browser.chrome.headless @systemtest @systemintegrationstest
 Feature: Angebote erfassen
 
   Scenario Outline: Angebot erfassen Positivfälle
