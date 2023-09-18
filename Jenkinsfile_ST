@@ -73,7 +73,7 @@ node {
 
     stage('Ausfuehrung der ST') {
         sleep(time:15,unit:"SECONDS")
-        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app'
+        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/features'
         dir('app'){
             echo "Workdir=$WORKSPACE"
             sh 'ls -l'
