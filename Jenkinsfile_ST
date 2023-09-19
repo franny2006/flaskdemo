@@ -82,6 +82,7 @@ node {
             }
             sh 'ls -l'
             sh 'behave features/030_angebot_erfassen.feature --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/testreports'
+            sh 'behave features/020_angebot_erfassen.feature --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/testreports'
         }
     }
 
