@@ -73,7 +73,7 @@ node {
 
     stage('Ausfuehrung der ST') {
         sleep(time:15,unit:"SECONDS")
-        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/features'
+        sh 'cd /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app'
         dir('app'){
             echo "Workdir=$WORKSPACE"
             sh 'ls -l'
@@ -81,7 +81,7 @@ node {
                 writeFile file:'dummy', text:''
             }
             sh 'ls -l'
-//            sh 'behave 030_angebot_erfassen.feature --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/testreports'
+            sh 'behave features/030_angebot_erfassen.feature --junit --junit-directory /var/lib/jenkins/workspace/Demoanwendung_Frontend_ST/app/testreports'
         }
     }
 
